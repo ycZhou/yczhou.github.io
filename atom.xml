@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Viper&#39;s Notebook</title>
+  <subtitle>生命不息，挖坑不止</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://b.yczhou.cn/"/>
+  <updated>2017-02-28T13:03:07.000Z</updated>
+  <id>http://b.yczhou.cn/</id>
+  
+  <author>
+    <name>Viper</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>鸢尾花分类及sklearn实现</title>
+    <link href="http://b.yczhou.cn/2016/08/04/%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%88%86%E7%B1%BB%E5%8F%8Asklearn%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/</id>
+    <published>2016-08-04T07:17:00.000Z</published>
+    <updated>2017-02-28T13:03:07.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;背景介绍&quot;&gt;&lt;a href=&quot;#背景介绍&quot; class=&quot;headerlink&quot; title=&quot;背景介绍&quot;&gt;&lt;/a&gt;背景介绍&lt;/h1&gt;&lt;p&gt;前一段时间在学校数学建模培训的课程上给大家讲了神经网络的相关内容，由于准备时间比较紧张，后面的案例分析部分讲得也不是很详细，这里给大家讲一讲鸢尾花分类相关的东西。上次将鸢尾花分类的代码（神经网络，Matlab）代码给了大家，这里我主要是用Python写的。至于为什么要用Python，我这里就不再赘述了。之前已经给大家讲过如何用神经网络实现分类，这里我主要是想给大家看看机器学期的其他算法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="2016年" scheme="http://b.yczhou.cn/tags/2016%E5%B9%B4/"/>
+    
+      <category term="Python" scheme="http://b.yczhou.cn/tags/Python/"/>
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="八月" scheme="http://b.yczhou.cn/tags/%E5%85%AB%E6%9C%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The Beginning of Machine Learning | 机器学习初步</title>
+    <link href="http://b.yczhou.cn/2016/07/13/ml/"/>
+    <id>http://b.yczhou.cn/2016/07/13/ml/</id>
+    <published>2016-07-13T08:21:04.000Z</published>
+    <updated>2017-02-28T13:03:07.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是机器学习-？&quot;&gt;&lt;a href=&quot;#什么是机器学习-？&quot; class=&quot;headerlink&quot; title=&quot;什么是机器学习 ？&quot;&gt;&lt;/a&gt;什么是机器学习 ？&lt;/h2&gt;&lt;p&gt;当今时代，不论文理，不论农医，各行各业的人士，都或多或少听说过机器学习这个词。&lt;/p&gt;
+&lt;h3 id=&quot;一个故事说明什么是机器学习&quot;&gt;&lt;a href=&quot;#一个故事说明什么是机器学习&quot; class=&quot;headerlink&quot; title=&quot;一个故事说明什么是机器学习&quot;&gt;&lt;/a&gt;一个故事说明什么是机器学习&lt;/h3&gt;&lt;p&gt;&amp;emsp;&amp;emsp;时至如今，机器学习所涵盖的范围已经太广太广，这个词让很多人非常的疑惑。首先，它是英文Machine Learning(ML)的直译，在计算机界Machine一般指计算机。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;传统上如果我们想让计算机工作，我们给它一串指令，然后它遵循这一串指令一步步执行下去。有因有果，非常明确。在机器学习中，它接受你输入的数据。也就是说，机器学习是一种让计算机利用数据而不是指令来进行工作的方法。这听起来非常不可思议，但结果上却是非常可行的。“统计”思想将在你学习“机器学习”相关理念时无时无刻不伴随着你，相关而不是因果的概念将是支撑机器学习能够工作的核心概念。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="2016年" scheme="http://b.yczhou.cn/tags/2016%E5%B9%B4/"/>
+    
+      <category term="七月" scheme="http://b.yczhou.cn/tags/%E4%B8%83%E6%9C%88/"/>
+    
+      <category term="Python" scheme="http://b.yczhou.cn/tags/Python/"/>
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="神经网络" scheme="http://b.yczhou.cn/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>青春为伴，玩转青海</title>
+    <link href="http://b.yczhou.cn/2016/07/03/qh/"/>
+    <id>http://b.yczhou.cn/2016/07/03/qh/</id>
+    <published>2016-07-03T13:37:26.000Z</published>
+    <updated>2017-02-28T13:03:07.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;alert alert-info&quot;&gt;&lt;i class=&quot;fa fa-info&quot;&gt;&lt;/i&gt;  很长时间没有写这么多文字了，文笔很差，大家谅解。这篇游记不仅有我们一行四人游玩的记录，还有一些背景文化的介绍，若实在看不下去，就刷刷图片吧，若图片也觉得不行，那就在评论区吐槽我吧。&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://o9s430069.bkt.clouddn.com/image/2016/qh/IMG_4095.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;在一行另外几个人写游记的时候，我吐槽他们是在写流水账，浪费了党和国家十多年来的教育。在我提笔，准确来说是敲键盘，写这篇游记的时候，心中不免有些忐忑。其实我作文一直都不怎么好，吐槽队友只是纯属搞笑。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;小时候的经历在很大程度上决定了我现在出游的方式（不过这篇游记不是讲我过去的经历的，所以就不提了），热闹繁华的大都市是我所不喜的，反而更偏爱人烟稀少的地方。背上行囊，装着帐篷、睡袋、水壶以及其他的必需品就可以开始旅行。多数时候是和志同道合的朋友一起，当然也少不了自己独自一人行走的时候。没错，我这类人一般被称为驴友。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="游记" scheme="http://b.yczhou.cn/categories/%E6%B8%B8%E8%AE%B0/"/>
+    
+    
+      <category term="青海" scheme="http://b.yczhou.cn/tags/%E9%9D%92%E6%B5%B7/"/>
+    
+      <category term="青海湖" scheme="http://b.yczhou.cn/tags/%E9%9D%92%E6%B5%B7%E6%B9%96/"/>
+    
+      <category term="2016年" scheme="http://b.yczhou.cn/tags/2016%E5%B9%B4/"/>
+    
+      <category term="七月" scheme="http://b.yczhou.cn/tags/%E4%B8%83%E6%9C%88/"/>
+    
+  </entry>
+  
+</feed>
