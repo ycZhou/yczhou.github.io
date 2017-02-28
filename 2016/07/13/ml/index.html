@@ -1,0 +1,1285 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,机器学习,2016年,七月,神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是机器学习 ？当今时代，不论文理，不论农医，各行各业的人士，都或多或少听说过机器学习这个词。
+一个故事说明什么是机器学习&amp;emsp;&amp;emsp;时至如今，机器学习所涵盖的范围已经太广太广，这个词让很多人非常的疑惑。首先，它是英文Machine Learning(ML)的直译，在计算机界Machine一般指计算机。
+&amp;emsp;&amp;emsp;传统上如果我们想让计算机工作，我们给它一串指令，然后它遵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Beginning of Machine Learning | 机器学习初步">
+<meta property="og:url" content="http://b.yczhou.cn/2016/07/13/ml/index.html">
+<meta property="og:site_name" content="Viper's Notebook">
+<meta property="og:description" content="什么是机器学习 ？当今时代，不论文理，不论农医，各行各业的人士，都或多或少听说过机器学习这个词。
+一个故事说明什么是机器学习&amp;emsp;&amp;emsp;时至如今，机器学习所涵盖的范围已经太广太广，这个词让很多人非常的疑惑。首先，它是英文Machine Learning(ML)的直译，在计算机界Machine一般指计算机。
+&amp;emsp;&amp;emsp;传统上如果我们想让计算机工作，我们给它一串指令，然后它遵">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%86%B3%E7%AD%96%E6%A0%91%E6%A8%A1%E5%9E%8B2.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%80%9D%E7%BB%B4%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/sigmoid.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%8C%AB%E7%9A%84%E8%A7%86%E8%A7%89%E7%A0%94%E7%A9%B6.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/lenet.gif">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/legend-bottom.gif">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%BA%BF%E6%80%A7%E4%B8%8D%E5%8F%AF%E5%88%86%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%AB%98%E7%BB%B4%E5%8F%AF%E5%88%86.gif">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_1_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_3_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%A5%9E%E7%BB%8F%E5%85%83.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/warren-walter.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp%E7%AC%A6%E5%8F%B7%E5%8C%96.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/Rosenblat.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%AE%80%E5%8D%95%E6%84%9F%E7%9F%A5%E5%99%A8.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A8.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A82.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A83.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A84.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/Marvin%20Minsky.jpeg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/david-hinton.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8C%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8C%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151231073619073-461403542.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151231074314604-2050732128.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151224145544656-1225191900.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%8C%AB%E7%9A%84%E8%A7%86%E8%A7%89%E7%A0%94%E7%A9%B6.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228170208120-1856567090.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228134016120-1091351096.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228170149135-2107087462.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ANN%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/6941baebjw1ew6gxfmjqgj206e018a9w.jpg">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_13_1.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_15_0.png">
+<meta property="og:updated_time" content="2017-02-28T13:03:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Beginning of Machine Learning | 机器学习初步">
+<meta name="twitter:description" content="什么是机器学习 ？当今时代，不论文理，不论农医，各行各业的人士，都或多或少听说过机器学习这个词。
+一个故事说明什么是机器学习&amp;emsp;&amp;emsp;时至如今，机器学习所涵盖的范围已经太广太广，这个词让很多人非常的疑惑。首先，它是英文Machine Learning(ML)的直译，在计算机界Machine一般指计算机。
+&amp;emsp;&amp;emsp;传统上如果我们想让计算机工作，我们给它一串指令，然后它遵">
+<meta name="twitter:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%86%B3%E7%AD%96%E6%A0%91%E6%A8%A1%E5%9E%8B2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://b.yczhou.cn/2016/07/13/ml/"/>
+
+
+
+
+
+  <title> The Beginning of Machine Learning | 机器学习初步 | Viper's Notebook </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=56939218";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Viper's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生命不息，挖坑不止</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://b.yczhou.cn/2016/07/13/ml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Viper">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://b.yczhou.cn/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Viper's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                The Beginning of Machine Learning | 机器学习初步
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-13T16:21:04+08:00">
+                2016-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/13/ml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/13/ml/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/07/13/ml/" class="leancloud_visitors" data-flag-title="The Beginning of Machine Learning | 机器学习初步">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是机器学习-？"><a href="#什么是机器学习-？" class="headerlink" title="什么是机器学习 ？"></a>什么是机器学习 ？</h2><p>当今时代，不论文理，不论农医，各行各业的人士，都或多或少听说过机器学习这个词。</p>
+<h3 id="一个故事说明什么是机器学习"><a href="#一个故事说明什么是机器学习" class="headerlink" title="一个故事说明什么是机器学习"></a>一个故事说明什么是机器学习</h3><p>&emsp;&emsp;时至如今，机器学习所涵盖的范围已经太广太广，这个词让很多人非常的疑惑。首先，它是英文Machine Learning(ML)的直译，在计算机界Machine一般指计算机。</p>
+<p>&emsp;&emsp;传统上如果我们想让计算机工作，我们给它一串指令，然后它遵循这一串指令一步步执行下去。有因有果，非常明确。在机器学习中，它接受你输入的数据。也就是说，机器学习是一种让计算机利用数据而不是指令来进行工作的方法。这听起来非常不可思议，但结果上却是非常可行的。“统计”思想将在你学习“机器学习”相关理念时无时无刻不伴随着你，相关而不是因果的概念将是支撑机器学习能够工作的核心概念。<br><a id="more"></a><br>&emsp;&emsp;这个例子来源于我真实的生活经验，我在思考这个问题的时候突然发现它的过程可以被扩充化为一个完整的机器学习过程，因此我决定将这个例子作为所有介绍的开始。这个故事我将之称为“等人问题”。</p>
+<p>&emsp;&emsp;我相信大家都有跟别人相约，然后等人的经历。现实生活中不是每个人都是那么守时的，于是当你碰到一些爱迟到的人，你的时间不可避免的要浪费。现在我就给大家举这样一个例子。</p>
+<p>&emsp;&emsp;我有一个朋友A，他不是那么的守时，最常见的表现是他经常迟到。当有一次我跟他约好3点钟在某个麦当劳见面时，在我出门的那么一刻，我突然意识到一个问题：我现在出发合适吗？我会不会又到了地点后，花上数十分钟去等他？我决定采取一个策略来解决这个问题。</p>
+<p>&emsp;&emsp;想要解决这个问题，有好几种方法。第一种方法是采用知识：我搜寻能够解决这个问题的知识。但是非常遗憾，没有人会把如何等人这个问题作为知识传授，因此我不可能找到已有的知识能够解决这个问题。第二种方法就是询问他人：我去询问他人以获得解决这个问题的能力。但是同样，这个问题可能没有人能够解答，因为可能没人碰上和我一样的情况。第三种方法就是准则法：我问自己，我是否设立过什么准则去面对这个问题？例如，无论别人如何，我都会守时到达。但我不是这一样一个死板的人，我没有设立过这样的规则。</p>
+<p>&emsp;&emsp;实际上，我相信有种方法比以上三种都要合适。我把过往跟A相约的经历全部回想一遍，发现跟他相约的次数中，迟到站了大多数的比例。而我利用这来预测他这次迟到的可能性。如果这个值超出了我心目中的某个界限，那我选择等一会儿再出发。假设我与A约过5次，他迟到的次数是4次，准时1次，那么他迟到的比例是80%，假如说我心中的阈值是70%，那我就选择等一等再出发。假如说他按时到达5次，迟到1次，那么他迟到的比例是20%，低于我心中的阈值，那我选择按时出门。这个方法又被称为经验法。在经验法的思考中，我实际上利用了以往所有相约的数据。因此也可以称之为依据数据做的判断。</p>
+<p>&emsp;&emsp;<strong>依据数据所做的判断跟机器学习的思想根本上是一致的</strong></p>
+<p>&emsp;&emsp;在刚才的思考过程中，我们只考虑了“频次”这种属性。在真实的机器学习中，这可能都算不上一个应用。一般的机器学习模型至少考虑两个量：一个是因变量，也就是我们希望预测的结果，在这个例子中就是A迟到与否。另一个是因变量，也就是用来A是否迟到的量。假设我们将时间作为自变量，譬如我发现A所有迟到的日子基本都是星期五，而在非星期五的情况下他基本上不迟到，于是我就可以建立一个模型，来模拟A迟到与否跟日子是否是星期五的概率。如下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%86%B3%E7%AD%96%E6%A0%91%E6%A8%A1%E5%9E%8B2.png" alt="决策树模型"></p>
+<p>&emsp;&emsp;图中所展示的就是一个决策树模型。</p>
+<p>&emsp;&emsp;当我们考虑的变量只有一个时，情况较为简单。如果把我们的自变量再增加一个，例如A迟到的部分情况是在他开车过来的时候（你可以认为他开车的水平比较烂，或者是路上有些堵）。于是我们可以关联考虑这些信息，建立一个更为复杂的模型，这个模型就包含了两个自变量和一个因变量。</p>
+<p>&emsp;&emsp;再考虑复杂一些的情况，A迟到与否跟天气也有一定的关联，例如在下雨的时候，A迟到的次数更多。那么这时候我们就需要考虑三个自变量了。</p>
+<p>&emsp;&emsp;如果我们希望能够预测A迟到的具体时间，那么我们可以把他每次迟到的时间跟前面考虑的自变量统一建立一个模型。于是通过这个模型，我们就能预测他大概会迟到几分钟。这样就可以帮助我们更好的规划我们出门的时间。在这样的情况下，决策树就无法很好的支撑了，因为决策树只能预测离散的数据。现在我们尝试使用线性回归的方法来建立这个模型。</p>
+<p>&emsp;&emsp;如果我把建立模型的过程交给电脑，比如把所有的自变量和因变量输入，然后让计算机帮我们生成一个模型，同时让计算机根据我当前的情况，给出我是否需要推迟出门时间，需要推迟几分钟的建议。那么计算机执行这些辅助决策的过程就是机器学习的过程。</p>
+<p>&emsp;&emsp;<strong>机器学习方法是计算机利用已有的数据（经验），得出了某种模型（迟到的规律），并利用此模型预测未来（是否迟到）的一种方法。</strong></p>
+<p>&emsp;&emsp;接下来，我会开始对机器学习做正式的介绍，包括定义、范围、方法和应用等等。</p>
+<h3 id="机器学习的定义："><a href="#机器学习的定义：" class="headerlink" title="机器学习的定义："></a>机器学习的定义：</h3><blockquote>
+<p>A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E. (From Wikipedia)</p>
+<p>假设用P来评估计算机程序在某任务类T上的性能，若一个程序通过利用经验E在T中任务上获得了性能改善，则我们就说关于T和P，改程序对E进行了学习。</p>
+</blockquote>
+<p>&emsp;&emsp;从广义上来说，机器学习是一种能够赋予机器“学习”的能力以此让它能够完成直接编程无法完成的功能的方法。但从实践的意义上来说，机器学习就是一种通过利用数据，训练出模型，然后使用模型预测的一种方法。</p>
+<p>&emsp;&emsp;举个例子，就拿很多人关心的房子来说。假如现在我手中有一套住房需要售卖，我应该给它标上多少的价格？房子的面积是100平方米，价格应该是100万，120万还是180万？</p>
+<p>&emsp;&emsp;很显然，我希望获得房价与面积的某种规律。那么我该如何获得这个规律？用报纸上的房价平均数据？还是参考别人面积相似的房子？无论哪种，似乎都不太靠谱。</p>
+<p>&emsp;&emsp;我现在希望获得一个合理的，并且能够最大程度的反映面积与房价关系的规律。于是我调查了周围与我房型类似的一些房子，获得了一组数据。这组数据中包含了大大小小房子的面积和价格，如果我能从这组数据中找出面积雨价格的规律，那么我就可以得出我的房子的价格。</p>
+<p>&emsp;&emsp;这个规律的寻找很简单，拟合出一条直线，让它“穿过”所有的点，并且与各个点的距离尽可能的小。通过这条直线，我获得了一个能够最佳反映房价与面积的规律。这条直线同时也是式子y=a•x+b所表明的规律。a、b是直线的参数，获得这些参数以后，我们就能计算出房子的价格。假设a=0.75，b=50，则房价=100•0.75+50=125（万）。这个结果与前文提到的100万，120万，180万都不一样。由于这条直线综合考虑了大部分的情况，因此从“统计”意义上来说，这是一个最合理的预测。</p>
+<p>&emsp;&emsp;在求解过程中透露出了两个信息：</p>
+<p>&emsp;&emsp;1. 房价模型是根据拟合的函数类型决定的。如果是直线，那么拟合出的就是直线方程。如果是其他类型的线，例如抛物线，那么拟合出的就是抛物线方程。机器学习有众多算法，一些强力算法可以拟合出复杂的非线性模型，用来反映一些不适直线所能表的的情况。</p>
+<p>&emsp;&emsp;2. 如果我们的数据（这里说的数据是指的有用的数据）越多，我们的模型也就越能够考虑到更多的情况，这样对于新情况的预测效果<strong>可能</strong>就会越好。这是机器学习中“数据为王”思想的一个体现。一般来说（不是绝对），数据越多，最后机器学习声称的模型预测能力也就越强。</p>
+<p>&emsp;&emsp;通过我们拟合直线的过程，我们可以对机器学习过程做一个简单的回顾：首先，我们需要在计算机中存储历史的数据。接着，我们将这些数据通过机器学习算法进行处理，这个过程在机器学习中被称为“训练”，处理的结果可以被我们用来对新的数据进行预测，这个结果一般被称为模型。对新的数据的预测过程在机器学习中叫做“预测”。”训练“与”预测“是机器学习的两个过程，”模型“则是过程中间输出的结果，”训练“产生”模型“，”模型“指导”预测“。</p>
+<p>&emsp;&emsp;下图展示了机器学习的过程与人类对历史经验归纳过程的对比<br><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%80%9D%E7%BB%B4%E5%AF%B9%E6%AF%94.png" alt=""></p>
+<p>&emsp;&emsp;人类在成长、生活的过程中积累了很多的历史与经验。人类定期地对这些经验进行“归纳”，获得了生活的“规律”。当人类遇到未知的问题或者需要对未来进行“推测”的时候，人类使用这些“规律”，对未知的问题与未来进行“推测”，从而指导自得的生活和工作。</p>
+<p>&emsp;&emsp;机器学习中的“训练”和“归纳”和“推测”过程。通过这样的对应，我们可以发现，机器学习的思想其实并不复杂，仅仅是对人类生活中学习成长过程的一个模拟。由于机器学习不是基于传统意义上编程行程的结果，因此它的处理过程不是因果的逻辑，而是通过归纳思想得出的相关性理论。</p>
+<h3 id="机器学习的算法"><a href="#机器学习的算法" class="headerlink" title="机器学习的算法"></a>机器学习的算法</h3><p>&emsp;&emsp;通过上面的介绍我们大致了解了机器学习，在这个部分我会简单介绍一下机器学习中的经典代表算法。这部分介绍的重点是这些方法的内涵思想，数学与实践细节不会在这讨论。</p>
+<p>1.回归算法</p>
+<p>&emsp;&emsp;在大部分机器学习的课程中，回归算法都是介绍的第一个算法。原因有两个：一是回归算法比较简单，介绍它可以让人平滑地从统计学迁移到机器学习中；二是回归算法是后面若干算法的基石，如果不理解回归算法，则无法学习这些算法。回归算法有两个重要的子类：线性回归和逻辑回归。</p>
+<p>&emsp;&emsp;线性回归就是我们前面说到过的房价求解问题。如何拟合出一条直线最佳匹配我们所有的数据？一般使用“最小二乘法”来求解。“最小二乘法”的思想是这样的，假设我们拟合出的直线代表的数据是真实值，而观测到的数据代表拥有误差的值。为了尽可能减小误差的影响，需要求解一条直线使得所有误差的平方和最小。这就是一个典型的优化问题，常用的求解方法有最速下降法和牛顿法等。最速下降法是解决回归模型中最简单而且有效的方法之一。从严格意义上来说，由于后文中的神经网络中有线性回归的因子，因此最速下降法在后面的算法实现中也有应用。</p>
+<p>&emsp;&emsp;逻辑回归是一种与线性回归非常相似的算法，但是，从本质上讲，线性回归处理的问题类型与逻辑回归不一致。线性回归处理的是连续问题，而逻辑回归属于分类算法，也就是说，逻辑回归预测的结果是离散的分类，例如判断邮件是否是垃圾邮件等。实现方面，逻辑回归只是对线性回归的计算结果加上了一个Sigmoid函数，将数值结果转化为了0到1之间的概率，下面的图像中给出了一些Sigmoid函数的图形：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/sigmoid.png" alt=""></p>
+<p>&emsp;&emsp;接着我们根据这个概率可以做预测，例如概率大于0.5，则这封邮件邮件就是垃圾邮件，或者判断肿瘤是否为恶性肿瘤等。从直观上来说，逻辑回归是画出了一条分类线，见下图所示：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A.png" alt=""></p>
+<p>&emsp;&emsp;假设我们有一组肿瘤患者的数据，这些患者的肿瘤中有些是良性的，假设为图中蓝色的圆圈，有些是恶性的，假设为图中的红色五角星。这里肿瘤的红色（五角星）和蓝色（圆圈）可以称为数据的“标签”。同时每个数据包括两个“特征”：患者的年龄与肿瘤的大小。我们将这两个特征与标签映射到这个二维空间上，形成了上图所示的数据。</p>
+<p>&emsp;&emsp;当我有一个黄色的点时，我该如何判断这个肿瘤是恶性的还是良性的？根据红蓝点我们训练出了一个逻辑回归模型，也就是图中的分类线。这时，根据黄点出现在分类线的右侧，我们判断这个数据点的标签是红色，也就是这个肿瘤属于恶性肿瘤。</p>
+<p>&emsp;&emsp;逻辑回归算法划出的分类线基本都是线性的(也有划出非线性分类线的逻辑回归，不过那样的模型在处理数据量较大的时候效率会很低)，这意味着当两类之间的界线不是线性时，逻辑回归的表达能力就不足。下面的两个算法是机器学习界最强大且重要的算法，都可以拟合出非线性的分类线。</p>
+<p>2.神经网络</p>
+<p>&emsp;&emsp;神经网络(也称之为人工神经网络，ANN)算法是80年代机器学习界非常流行的算法，不过在90年代中途衰落。现在，携着“深度学习”之势，神经网络重装归来，重新成为最强大的机器学习算法之一。</p>
+<p>&emsp;&emsp;神经网络的诞生起源于对大脑工作机理的研究。早期生物界学者们使用神经网络来模拟大脑。机器学习的学者们使用神经网络进行机器学习的实验，发现在视觉与语音的识别上效果都相当好。在BP算法(加速神经网络训练过程的数值算法)诞生以后，神经网络的发展进入了一个热潮。BP算法的发明人之一是前面介绍的机器学习大牛Geoffrey Hinton。</p>
+<p>&emsp;&emsp;具体说来，神经网络的学习机理是什么？简单来说，就是分解与整合。在著名的<a href="http://www.nobelprize.org/nobel_prizes/medicine/laureates/1981/" target="_blank" rel="external">Hubel-Wiesel试验</a>中，学者们研究猫的视觉分析机理是这样的。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%8C%AB%E7%9A%84%E8%A7%86%E8%A7%89%E7%A0%94%E7%A9%B6.png" alt=""></p>
+<p>&emsp;&emsp;比方说，一个正方形，分解为四个折线进入视觉处理的下一层中。四个神经元分别处理一个折线。每个折线再继续被分解为两条直线，每条直线再被分解为黑白两个面。于是，一个复杂的图像变成了大量的细节进入神经元，神经元处理以后再进行整合，最后得出了看到的是正方形的结论。这就是大脑视觉识别的机理，也是神经网络工作的机理。</p>
+<p>&emsp;&emsp;神经网络的具体形式我将在后文中给大家讲解。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB.jpg" alt=""></p>
+<p>&emsp;&emsp;以图像识别为例，图像的原始输入是像素，相邻像素组成线条，多个线条组成纹理，进一步形成图案，图案构成了物体的局部，直至整个物体的样子。不难发现，可以找到原始输入和浅层特征之间的联系，再通过中层特征，一步一步获得和高层特征的联系。</p>
+<p>&emsp;&emsp;下图会演示神经网络在图像识别领域的一个著名应用，这个程序叫做LeNet，是一个基于多个隐层构建的神经网络。通过LeNet可以识别多种手写数字，并且达到很高的识别精度与拥有较好的鲁棒性。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/lenet.gif" alt=""><br><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/legend-bottom.gif" alt=""></p>
+<p>想要了解更多关于LeNet相关的知识请点击：<a href="http://deeplearning.net/tutorial/lenet.html" target="_blank" rel="external">Convolutional Neural Networks (LeNet)</a>以及<a href="http://blog.csdn.net/zouxy09/article/details/8781543" target="_blank" rel="external">Deep Learning（深度学习）学习笔记整理系列</a>。使用Caffe的读者可以看看<a href="http://caffe.berkeleyvision.org/gathered/examples/mnist.html" target="_blank" rel="external">Training LeNet on MNIST with Caffe</a>。</p>
+<p>&emsp;&emsp;进入90年代，神经网络的发展进入了一个瓶颈期。其主要原因是尽管有BP算法的加速，神经网络的训练过程仍然很困难。因此90年代后期支持向量机(Supported Vector Machine, SVM)算法取代了神经网络的地位。</p>
+<p>3.支持向量机</p>
+<p>&emsp;&emsp;支持向量机算法是诞生于统计学习界，同时在机器学习界大放光彩的经典算法。</p>
+<p>&emsp;&emsp;支持向量机算法从某种意义上来说是逻辑回归算法的强化：通过给予逻辑回归算法更严格的优化条件，支持向量机算法可以获得比逻辑回归更好的分类界线。但是如果没有某类函数技术，则支持向量机算法最多算是一种更好的线性分类技术。</p>
+<p>&emsp;&emsp;但是，通过跟高斯“核”的结合，支持向量机可以表达出非常复杂的分类界线，从而达成很好的的分类效果。“核”事实上就是一种特殊的函数，最典型的特征就是可以将低维的空间映射到高维的空间。</p>
+<p>&emsp;&emsp;例如下图所示：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%BA%BF%E6%80%A7%E4%B8%8D%E5%8F%AF%E5%88%86%E6%95%B0%E6%8D%AE.png" alt=""></p>
+<p>&emsp;&emsp;我们如何在二维平面划分出一个圆形的分类界线？在二维平面可能会很困难，但是通过“核”可以将二维空间映射到三维空间，然后使用一个线性平面就可以达成类似效果。也就是说，二维平面划分出的非线性分类界线可以等价于三维平面的线性分类界线。于是，我们可以通过在三维空间中进行简单的线性划分就可以达到在二维平面中的非线性划分效果。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%AB%98%E7%BB%B4%E5%8F%AF%E5%88%86.gif" alt=""></p>
+<p>&emsp;&emsp;支持向量机是一种数学成分很浓的机器学习算法（相对的，神经网络则有生物科学成分）。在算法的核心步骤中，有一步证明，即将数据从低维映射到高维不会带来最后计算复杂性的提升。于是，通过支持向量机算法，既可以保持计算效率，又可以获得非常好的分类效果。因此支持向量机在90年代后期一直占据着机器学习中最核心的地位，基本取代了神经网络算法。直到现在神经网络借着深度学习重新兴起，两者之间才又发生了微妙的平衡转变。</p>
+<p>4.聚类算法</p>
+<p>&emsp;&emsp;前面的算法中的一个显著特征就是我的训练数据中包含了标签，训练出的模型可以对其他未知数据预测标签。在下面的算法中，训练数据都是不含标签的，而算法的目的则是通过训练，推测出这些数据的标签。这类算法有一个统称，即无监督算法(前面有标签的数据的算法则是有监督算法)。无监督算法中最典型的代表就是聚类算法。</p>
+<p>&emsp;&emsp;让我们还是拿一个二维的数据来说，某一个数据包含两个特征。我希望通过聚类算法，给他们中不同的种类打上标签，我该怎么做呢？简单来说，聚类算法就是计算种群中的距离，根据距离的远近将数据划分为多个族群。</p>
+<p>&emsp;&emsp;聚类算法中最典型的代表就是<a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank" rel="external">K-Means算法</a>。</p>
+<p>5.降维算法</p>
+<p>&emsp;&emsp;降维算法也是一种无监督学习算法，其主要特征是将数据从高维降低到低维层次。在这里，维度其实表示的是数据的特征量的大小，例如，房价包含房子的长、宽、面积与房间数量四个特征，也就是维度为4维的数据。可以看出来，长与宽事实上与面积表示的信息重叠了，例如面积=长 × 宽。通过降维算法我们就可以去除冗余信息，将特征减少为面积与房间数量两个特征，即从4维的数据压缩到2维。于是我们将数据从高维降低到低维，不仅利于表示，同时在计算上也能带来加速。</p>
+<p>&emsp;&emsp;刚才说的降维过程中减少的维度属于肉眼可视的层次，同时压缩也不会带来信息的损失(因为信息冗余了)。如果肉眼不可视，或者没有冗余的特征，降维算法也能工作，不过这样会带来一些信息的损失。但是，降维算法可以从数学上证明，从高维压缩到的低维中最大程度地保留了数据的信息。因此，使用降维算法仍然有很多的好处。</p>
+<p>&emsp;&emsp;降维算法的主要作用是压缩数据与提升机器学习其他算法的效率。通过降维算法，可以将具有几千个特征的数据压缩至若干个特征。另外，降维算法的另一个好处是数据的可视化，例如将5维的数据压缩至2维，然后可以用二维平面来可视。降维算法的主要代表是PCA算法(即主成分分析算法)。</p>
+<p>6.推荐算法</p>
+<p>&emsp;&emsp;推荐算法是目前业界非常火的一种算法，在电商界，如亚马逊，天猫，京东等得到了广泛的运用。推荐算法的主要特征就是可以自动向用户推荐他们最感兴趣的东西，从而增加购买率，提升效益。推荐算法有两个主要的类别：</p>
+<p>&emsp;&emsp;一类是基于物品内容的推荐，是将与用户购买的内容近似的物品推荐给用户，这样的前提是每个物品都得有若干个标签，因此才可以找出与用户购买物品类似的物品，这样推荐的好处是关联程度较大，但是由于每个物品都需要贴标签，因此工作量较大。</p>
+<p>&emsp;&emsp;另一类是基于用户相似度的推荐，则是将与目标用户兴趣相同的其他用户购买的东西推荐给目标用户，例如小A历史上买了物品B和C，经过算法分析，发现另一个与小A近似的用户小D购买了物品E，于是将物品E推荐给小A。</p>
+<p>&emsp;&emsp;两类推荐都有各自的优缺点，在一般的电商应用中，一般是两类混合使用。推荐算法中最有名的算法就是协同过滤算法。</p>
+<p>7.其它</p>
+<p>&emsp;&emsp;除了以上算法之外，机器学习界还有其他的如高斯判别，朴素贝叶斯，决策树等等算法。但是上面列的六个算法是使用最多，影响最广，种类最全的典型。机器学习界的一个特色就是算法众多，发展百花齐放。</p>
+<p>&emsp;&emsp;下面做一个总结，按照训练的数据有无标签，可以将上面算法分为监督学习算法和无监督学习算法，但推荐算法较为特殊，既不属于监督学习，也不属于非监督学习，是单独的一类。</p>
+<pre><code>监督学习算法：
+线性回归，逻辑回归，神经网络，SVM
+
+无监督学习算法：
+聚类算法，降维算法
+
+特殊算法：
+推荐算法
+</code></pre><p>&emsp;&emsp;除了这些算法以外，有一些算法的名字在机器学习领域中也经常出现。但他们本身并不算是一个机器学习算法，而是为了解决某个子问题。其中的代表有：最速下降法，主要运用在线型回归，逻辑回归，神经网络，推荐算法中；牛顿法，主要运用在线型回归中；BP算法，主要运用在神经网络中；SMO算法，主要运用在SVM中。</p>
+<h2 id="环境搭建-CentOS-6-5"><a href="#环境搭建-CentOS-6-5" class="headerlink" title="环境搭建(CentOS 6.5)"></a>环境搭建(CentOS 6.5)</h2><p>Anaconda2-4.0.0.0 + scikit-learn + Theano</p>
+<p>首先安装pyenv（Python版本控制器）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ yum -y install git gcc gcc-c++</div><div class="line">$ cd ~</div><div class="line">$ git clone https://github.com/yyuu/pyenv.git ~/.pyenv</div><div class="line">$ echo &apos;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&apos;&gt;&gt; ~/.bashrc</div><div class="line">$ echo &apos;export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&apos;&gt;&gt; ~/.bashrc</div><div class="line">$ echo &apos;eval &quot;$(pyenv init -)&quot;&apos; &gt;&gt; ~/.bashrc</div><div class="line">$ exec $SHELL -l</div></pre></td></tr></table></figure>
+<p>Anaconda2-4.0.0.0安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ pyenv install anaconda2-4.0.0.0</div><div class="line">$ pyenv global acanconda2-4.0.0.0</div></pre></td></tr></table></figure>
+<p>scikit-learn安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ conda install scikit-learn</div></pre></td></tr></table></figure>
+<p>pip安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ wget https://bootstrap.pypa.io/get-pip.py</div><div class="line">$ python get-pip.py</div></pre></td></tr></table></figure>
+<p>Theano安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install theano</div></pre></td></tr></table></figure>
+<p>测试Theano：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> theano</div><div class="line">theano.test()</div></pre></td></tr></table></figure>
+<p>会显示theano的版本号，安装位置，已经其他包的安装版本，如numpy, nose, python等</p>
+<h2 id="从头开始实现神经网络：入门"><a href="#从头开始实现神经网络：入门" class="headerlink" title="从头开始实现神经网络：入门"></a>从头开始实现神经网络：入门</h2><p>&emsp;&emsp;这里我不会推导所有的数学公式，在这我们会从头实现一个简单的两层神经网络。我会给我们正在做的事情一个相对直观的解释，也会给大家列出研读所需的资源链接。⚠️注意：这里的代码并不是高效的，只是为了让我们理解结构</p>
+<h3 id="产生数据集"><a href="#产生数据集" class="headerlink" title="产生数据集"></a>产生数据集</h3><p>&emsp;&emsp;scikit-learn提供了一些很有用的数据集产生器，这部分我们就不用自己写代码了。这里我们使用<a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html" target="_blank" rel="external">sklearn.datasets.make_moons</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line">np.random.seed(<span class="number">0</span>)<span class="comment"># 固定随机数种子，确保每次运行产生相同的随机数</span></div><div class="line">X, y = datasets.make_moons(<span class="number">300</span>, noise=<span class="number">0.2</span>)</div><div class="line">plt.xkcd()</div><div class="line">plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], s=<span class="number">60</span>, c=y, cmap=plt.cm.Spectral)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_1_0.png" alt="png"></p>
+<p>&emsp;&emsp;产生的数据共有两类，分别用红点和蓝点表示。我们的目标就是，在给定x和y轴的情况下训练机器学习分类器以预测正确的分类。明显的，这些数据并不是线性可分的，我们不能通过简单的画一条直线来区分这两类数据。所以我们不能使用诸如Logistic回归之类的线性分类器来区分这两类数据。</p>
+<h3 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h3><p>&emsp;&emsp;为了证明上述的观点，我们来训练一个Logistic回归分类器。输入为坐标值，输出为分类（0或者1）。方便起见，这里使用scikit-learn库中的Logistic回归类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, linear_model</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_data</span><span class="params">()</span>:</span></div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    X, y = datasets.make_moons(<span class="number">300</span>, noise=<span class="number">0.2</span>)</div><div class="line">    <span class="keyword">return</span> X, y</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">visualize</span><span class="params">(X, y, clf)</span>:</span></div><div class="line">    plot_decision_boundary(<span class="keyword">lambda</span> x: clf.predict(x), X, y)</div><div class="line">    plt.title(<span class="string">"Logistic Regression"</span>)</div><div class="line">    fig = matplotlib.pyplot.gcf()</div><div class="line">    fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span><span class="params">(pred_func, X, y)</span>:</span></div><div class="line">    x_min, x_max = X[:, <span class="number">0</span>].min() - <span class="number">.5</span>, X[:, <span class="number">0</span>].max() + <span class="number">.5</span></div><div class="line">    y_min, y_max = X[:, <span class="number">1</span>].min() - <span class="number">.5</span>, X[:, <span class="number">1</span>].max() + <span class="number">.5</span></div><div class="line">    h = <span class="number">0.01</span></div><div class="line"></div><div class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</div><div class="line">    <span class="comment"># 预测整个坐标平面中点的类别</span></div><div class="line">    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])</div><div class="line">    Z = Z.reshape(xx.shape)</div><div class="line"></div><div class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</div><div class="line">    plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], s=<span class="number">60</span>, c=y, cmap=plt.cm.Spectral)</div><div class="line"><span class="comment">#     plt.show()</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(X, y)</span>:</span></div><div class="line">    clf = linear_model.LogisticRegressionCV()</div><div class="line">    clf.fit(X, y)</div><div class="line">    <span class="keyword">return</span> clf</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    X, y = generate_data()</div><div class="line">    <span class="comment"># visualize(X, y)</span></div><div class="line">    clf = classify(X, y)</div><div class="line">    visualize(X, y, clf)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_3_0.png" alt="png"></p>
+<p>&emsp;&emsp;图中展示了用Logistic回归分类器学习到的决策边界，使用一条直线尽量将数据分离开来。</p>
+<h3 id="神经网络浅讲"><a href="#神经网络浅讲" class="headerlink" title="神经网络浅讲"></a>神经网络浅讲</h3><h4 id="神经元"><a href="#神经元" class="headerlink" title="神经元"></a>神经元</h4><h5 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h5><p>&emsp;&emsp;对于神经元的研究由来已久，20世纪初生物学家就已经知晓了神经元的组成结构。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%A5%9E%E7%BB%8F%E5%85%83.png" alt=""></p>
+<p>&emsp;&emsp;一个神经元通常具有多个<strong>树突</strong>，主要用来接受传入信息；每个神经元只有一条<strong>轴突</strong>，轴突尾端有许多轴突末梢可以给其他多个神经元传递信息。轴突末梢跟其他神经元的树突相连，这个连接的部位在生物学上称为<strong>突触</strong>。</p>
+<p>&emsp;&emsp;1943年，心理学家MuCulloch和数学家Pitts参考了生物神经元的结构，发表了抽象的神经元模型（MP），下面我们会具体来了解神经元模型。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/warren-walter.jpg" alt=""></p>
+<h5 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h5><p>&emsp;&emsp;神经元模型是一个包含输入、计算和输出功能的模型。输入可以类比为神经元的树突，计算可以类比为细胞核，输出则可以类比为神经元的轴突。</p>
+<p>&emsp;&emsp;下图是一个典型的神经元模型：包含3个输入，2个计算功能和一个输出。注意输入与求和之间的箭头，它们被称为“连接”，每个“连接”上有一个对应的“权值”。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp%E6%A8%A1%E5%9E%8B.png" alt=""></p>
+<p>&emsp;&emsp;对于更一般的情形，神经元模型的结构可以由下图给出：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp.jpg" alt=""></p>
+<p>&emsp;&emsp;一个神经网络的训练算法就是让权重的值调整到最佳，以使得整个网络的预测效果最好。</p>
+<p>&emsp;&emsp;我们使用a来表示输入，w来表示权值。一个表示连接的有向箭头可以这样来理解：在初端，传递的信号大小是a，端中间有加权参数w，经过这个加权后的信号就变成a*w，因此在连接的末端，信号的大小就变成了a*w。如果我们将神经元图中的所有变量用符号表示，并且写出输出的公式的话，就得到了了如下图所示的模型：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/mp%E7%AC%A6%E5%8F%B7%E5%8C%96.png" alt=""></p>
+<p>&emsp;&emsp;可见z是在输入和权值的线性加权和叠加了一个函数g的值。在MP模型中，函数g就是sgn函数，也就是取符号函数，当输入大于0时，输出1，否则输出0。在以后的过程中，为了方便表述，我们将神经元的所有计算放在一个圆圈中。</p>
+<p>&emsp;&emsp;当我们用“神经元”组成网络后，描述网络中的某个“神经元”时，我们更多地会用“单元”(unit)来指代，同时，由于神经网络的表现形式是一个有向图，有时也会用“结点”(node)来表达相同的意思。</p>
+<p>&emsp;&emsp;神经元模型的使用可以这样理解：</p>
+<p>&emsp;&emsp;我们有一个数据，称之为样本。样本有四个属性，其中三个属性已知，一个属性未知。我们需要做的就是通过三个已知属性预测未知属性。</p>
+<p>&emsp;&emsp;具体办法就是使用神经元的公式进行计算。三个已知属性的值是a<sub>1</sub>，a<sub>2</sub>，a<sub>3</sub>，未知属性的值是z。z可以通过公式计算出来。</p>
+<p>&emsp;&emsp;这里，已知的属性称之为特征，未知的属性称之为目标。假设特征与目标之间确实是线性关系，并且我们已经得到表示这个关系的权值w<sub>1</sub>，w<sub>2</sub>，w<sub>3</sub>。那么，我们就可以通过神经元模型预测新样本的目标。</p>
+<p>&emsp;&emsp;1943年发布的MP模型，虽然简单，但已经建立了神经网络大厦的地基。但是，MP模型中，权重的值都是预先设置的，因此不能学习。</p>
+<p>&emsp;&emsp;1949年心理学家Hebb提出了Hebb学习率，认为人脑神经细胞的突触（也就是连接）上的强度上可以变化的。于是计算科学家们开始考虑用调整权值的方法来让机器学习。这为后面的学习算法奠定了基础。</p>
+<p>&emsp;&emsp;尽管神经元模型与Hebb学习律都已诞生，但限于当时的计算机能力，直到接近十年后，第一个真正意义的神经网络才诞生。</p>
+<h4 id="单层神经网络（感知器）"><a href="#单层神经网络（感知器）" class="headerlink" title="单层神经网络（感知器）"></a>单层神经网络（感知器）</h4><h5 id="引子-1"><a href="#引子-1" class="headerlink" title="引子"></a>引子</h5><p>&emsp;&emsp;1958年，计算科学家Rosenblatt提出了由两层神经元组成的神经网络。他给它起了一个名字–“感知器”（Perceptron）（有的文献翻译成“感知机”，下文统一用“感知器”来指代）。</p>
+<p>&emsp;&emsp;感知器是当时首个可以学习的人工神经网络。Rosenblatt现场演示了其学习识别简单图像的过程，在当时的社会引起了轰动。</p>
+<p>&emsp;&emsp;人们认为已经发现了智能的奥秘，许多学者和科研机构纷纷投入到神经网络的研究中。美国军方大力资助了神经网络的研究，并认为神经网络比“原子弹工程”更重要。这段时间直到1969年才结束，这个时期可以看作神经网络的第一次高潮。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/Rosenblat.jpg" alt=""></p>
+<h5 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h5><p>&emsp;&emsp;下面来说明感知器模型。在原来MP模型的“输入”位置添加神经元节点，标志其为“输入单元”。其余不变，于是我们就有了下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%AE%80%E5%8D%95%E6%84%9F%E7%9F%A5%E5%99%A8.png" alt=""></p>
+<p>&emsp;&emsp;在“感知器”中，有两个层次。分别是输入层和输出层。输入层里的“输入单元”只负责传输数据，不做计算。输出层里的“输出单元”则需要对前面一层的输入进行计算。</p>
+<p>&emsp;&emsp;我们把需要计算的层次称之为“计算层”，并把拥有一个计算层的网络称之为“单层神经网络”。有一些文献会按照网络拥有的层数来命名，例如把“感知器”称为两层神经网络。但在本文里，我们根据计算层的数量来命名。</p>
+<p>&emsp;&emsp;假如我们要预测的目标不再是一个值，而是一个向量，例如[2,3]。那么可以在输出层再增加一个“输出单元”。</p>
+<p>&emsp;&emsp;下图显示了带有两个输出单元的单层神经网络，其中输出单元z<sub>1</sub>的计算公式如下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A8.png" alt=""></p>
+<p>&emsp;&emsp;可以看到，z<sub>1</sub>的计算跟原先的z并没有区别。我们已知一个神经元的输出可以向多个神经元传递，因此z<sub>2</sub>的计算公式如下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A82.png" alt=""></p>
+<p>&emsp;&emsp;可以看到，z<sub>2</sub>的计算中除了三个新的权值：w<sub>4</sub>，w<sub>5</sub>，w<sub>6</sub>以外，其他与z1是一样的。整个网络的输出如下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A83.png" alt=""></p>
+<p>&emsp;&emsp;我们改用二维的下标，用w<sub>x,y</sub>来表达一个权值。下标中的x代表后一层神经元的序号，而y代表前一层神经元的序号（序号的顺序从上到下）。例如，w<sub>1,2</sub>代表后一层的第1个神经元与前一层的第2个神经元的连接的权值（这种标记方式参照了Andrew Ng的课件）。根据以上方法标记，我们有了下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E6%84%9F%E7%9F%A5%E5%99%A84.png" alt=""></p>
+<p>&emsp;&emsp;如果我们仔细看输出的计算公式，会发现这两个公式就是线性代数方程组。因此可以用矩阵乘法来表达这两个公式。</p>
+<p>&emsp;&emsp;例如，输入的变量是[a<sub>1</sub>，a<sub>2</sub>，a<sub>3</sub>]<sup>T</sup>，用向量<strong>a</strong>来表示。方程的左边是[z<sub>1</sub>，z<sub>2</sub>]<sup>T</sup>，用向量<strong>z</strong>来表示。系数则是矩阵<strong>W</strong>（2行3列的矩阵，排列形式与公式中的一样）。于是，输出公式可以改写成：<strong>z</strong> = g(<strong>W</strong> • <strong>a</strong>)。</p>
+<p>&emsp;&emsp;这个公式就是神经网络中从前一层计算后一层的矩阵运算。</p>
+<h5 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h5><p>&emsp;&emsp;与神经元模型不同，感知器中的权值是通过训练得到的。因此，根据以前的知识我们知道，感知器类似一个逻辑回归模型，可以做线性分类任务。</p>
+<p>&emsp;&emsp;我们可以用决策分界来形象的表达分类的效果。决策分界就是在二维的数据平面中划出一条直线，当数据的维度是3维的时候，就是划出一个平面，当数据的维度是n维时，就是划出一个n-1维的超平面。在二维的情形中，就类似于我们前文提到的肿瘤的良性与恶性判断。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A.png" alt=""></p>
+<p>&emsp;&emsp;感知器只能做简单的线性分类任务。但是当时的人们热情太过于高涨，并没有人清醒的认识到这点。于是，当人工智能领域的巨擘Minsky指出这点时，事态就发生了变化。Minsky在1969年出版了一本叫《Perceptron》的书，里面用详细的数学证明了感知器的弱点，尤其是感知器对XOR（异或）这样的简单分类任务都无法解决。Minsky认为，如果将计算层增加到两层，计算量则过大，而且没有有效的学习算法。所以，他认为研究更深层的网络是没有价值的。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/Marvin%20Minsky.jpeg" alt=""></p>
+<p>&emsp;&emsp;由于Minsky的巨大影响力以及书中呈现的悲观态度，让很多学者和实验室纷纷放弃了神经网络的研究。神经网络的研究陷入了冰河期。这个时期又被称为“AI winter”。接近10年以后，对于两层神经网络的研究才带来神经网络的复苏。</p>
+<h4 id="两层神经网络"><a href="#两层神经网络" class="headerlink" title="两层神经网络"></a>两层神经网络</h4><h5 id="引子-2"><a href="#引子-2" class="headerlink" title="引子"></a>引子</h5><p>&emsp;&emsp;两层神经网络是本文的重点，因为正是在这时候，神经网络开始了大范围的推广与使用。</p>
+<p>&emsp;&emsp;Minsky说过单层神经网络无法解决异或问题。但是当增加一个计算层以后，两层神经网络不仅可以解决异或问题，而且具有非常好的非线性分类效果。不过两层神经网络的计算是一个问题，没有一个较好的解法。</p>
+<p>&emsp;&emsp;1986年，Rumelhar和Hinton等人提出了反向传播（Backpropagation，BP）算法，解决了两层神经网络所需要的复杂计算量问题，从而带动了业界使用两层神经网络研究的热潮。目前，大量的教授神经网络的教材，都是重点介绍两层（带一个隐藏层）神经网络的内容。</p>
+<p>&emsp;&emsp;这时候的Hinton还很年轻，30年以后，正是他重新定义了神经网络，带来了神经网络复苏的又一春。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/david-hinton.jpg" alt=""></p>
+<h5 id="结构-2"><a href="#结构-2" class="headerlink" title="结构"></a>结构</h5><p>&emsp;&emsp;两层神经网络除了包含一个输入层，一个输出层以外，还增加了一个中间层。此时，中间层和输出层都是计算层。我们扩展上节的单层神经网络，在右边新加一个层次（只含有一个节点）。</p>
+<p>&emsp;&emsp;现在，我们的权值矩阵增加到了两个，我们用上标来区分不同层次之间的变量。</p>
+<p>&emsp;&emsp;例如a<sub>x</sub><sup>(y)</sup>代表第y层的第x个节点。z<sub>1</sub>，z<sub>2</sub>变成了a<sub>1</sub><sup>(2)</sup>，a<sub>2</sub><sup>(2)</sup>。下图给出了a<sub>1</sub><sup>(2)</sup>，a<sub>2</sub><sup>(2)</sup>的计算公式：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8C%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png" alt=""></p>
+<p>计算最终输出z的方式是利用了中间层的a<sub>1</sub><sup>(2)</sup>，a<sub>2</sub><sup>(2)</sup>和第二个权值矩阵计算得到的，如下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8C%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2.png" alt=""></p>
+<p>假设我们的预测目标是一个向量，那么与前面类似，只需要在“输出层”再增加节点即可。</p>
+<p>我们使用向量和矩阵来表示层次中的变量。<strong>a</strong><sup>(1)</sup>，<strong>a</strong><sup>(2)</sup>，<strong>z</strong>是网络中传输的向量数据。<strong>W</strong><sup>(1)</sup>和<strong>W</strong><sup>(2)</sup>是网络的矩阵参数。</p>
+<p>使用矩阵运算来表达整个计算公式的话如下：<strong>a</strong><sup>(2)</sup> = g(<strong>W</strong><sup>(1)</sup> • <strong>a</strong><sup>(1)</sup>), <strong>z</strong> = g(<strong>W</strong><sup>(2)</sup> • <strong>a</strong><sup>(2)</sup>)</p>
+<p>需要说明的是，在两层神经网络中，我们不再使用sgn函数作为函数g，而是使用平滑函数sigmoid作为函数g。我们把函数g也称作激活函数（active function）。这些函数的优点是它们的导数可以使用原函数的值来计算。例如，tanh(x)的导数是1-tanh<sup>2</sup>(x)，我们只需要计算一次tanh的值，就可以得到它导数的值。</p>
+<h5 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h5><p>与单层神经网络不同。理论证明，两层神经网络可以无限逼近任意连续函数。</p>
+<p>这是什么意思呢？也就是说，面对复杂的非线性分类任务，两层（带一个隐藏层）神经网络可以分类的很好。</p>
+<p>下面就是一个例子（此两图来自<a href="http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/" target="_blank" rel="external">colah的博客</a>），红色的线与蓝色的线代表数据。而红色区域和蓝色区域代表由神经网络划开的区域，两者的分界线就是决策分界。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151231073619073-461403542.png" alt=""></p>
+<p>可以看到，这个两层神经网络的决策分界是非常平滑的曲线，而且分类的很好。有趣的是，前面已经学到过，单层网络只能做线性分类任务。而两层神经网络中的后一层也是线性分类层，应该只能做线性分类任务。为什么两个线性分类任务结合就可以做非线性分类任务？</p>
+<p>我们可以把输出层的决策分界单独拿出来看一下。就是下图</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151231074314604-2050732128.png" alt=""></p>
+<p>可以看到，输出层的决策分界仍然是直线。关键就是，从输入层到隐藏层时，数据发生了空间变换。也就是说，两层神经网络中，隐藏层对原始的数据进行了一个空间变换，使其可以被线性分类，然后输出层的决策分界划出了一个线性分类分界线，对其进行分类。</p>
+<p>这样就导出了两层神经网络可以做非线性分类的关键–隐藏层。联想到我们一开始推导出的矩阵公式，我们知道，矩阵和向量相乘，本质上就是对向量的坐标空间进行一个变换。因此，隐藏层的参数矩阵的作用就是使得数据的原始坐标空间从线性不可分，转换成了线性可分。</p>
+<p>两层神经网络通过两层的线性模型模拟了数据内真实的非线性函数。因此，多层的神经网络的本质就是复杂函数拟合。</p>
+<p>下面来讨论一下隐藏层的节点数设计。在设计一个神经网络时，输入层的节点数需要与特征的维度匹配，输出层的节点数要与目标的维度匹配。而中间层的节点数，却是由设计者指定的。因此，“自由”把握在设计者的手中。但是，节点数设置的多少，却会影响到整个模型的效果。如何决定这个自由层的节点数呢？目前业界没有完善的理论来指导这个决策。一般是根据经验来设置。较好的方法就是预先设定几个可选值，通过切换这几个值来看整个模型的预测效果，选择效果最好的值作为最终选择。这种方法又叫做Grid Search（网格搜索）。</p>
+<h5 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h5><p>　　下面简单介绍一下两层神经网络的训练。</p>
+<p>　　在Rosenblat提出的感知器模型中，模型中的参数可以被训练，但是使用的方法较为简单，并没有使用目前机器学习中通用的方法，这导致其扩展性与适用性非常有限。从两层神经网络开始，神经网络的研究人员开始使用机器学习相关的技术进行神经网络的训练。例如用大量的数据（1000-10000左右），使用算法进行优化等等，从而使得模型训练可以获得性能与数据利用上的双重优势。</p>
+<p>　　机器学习模型训练的目的，就是使得参数尽可能的与真实的模型逼近。具体做法是这样的。首先给所有参数赋上随机值。我们使用这些随机生成的参数值，来预测训练数据中的样本。样本的预测目标为y<sub>p</sub>，真实目标为y。那么，定义一个值loss，计算公式:loss = (y<sub>p</sub> - y)<sup>2</sup></p>
+<p>　　这个值称之为损失（loss），我们的目标就是使对所有训练数据的损失和尽可能的小。</p>
+<p>　　如果将先前的神经网络预测的矩阵公式带入到y<sub>p</sub>中（因为有z=y<sub>p</sub>），那么我们可以把损失写为关于参数（parameter）的函数，这个函数称之为<strong>损失函数</strong>（loss function）。下面的问题就是求：如何优化参数，能够让损失函数的值最小。</p>
+<p>　　此时这个问题就被转化为一个优化问题。一个常用方法就是高等数学中的求导，但是这里的问题由于参数不止一个，求导后计算导数等于0的运算量很大，所以一般来说解决这个优化问题使用的是最速下降法。最速下降法每次计算参数在当前的梯度，然后让参数向着梯度的反方向前进一段距离，不断重复，直到梯度接近零时截止。一般这个时候，所有的参数恰好达到使损失函数达到一个最低值的状态。</p>
+<p>　　在神经网络模型中，由于结构复杂，每次计算梯度的代价很大。因此还需要使用反向传播算法。反向传播算法是利用了神经网络的结构进行的计算。不一次计算所有参数的梯度，而是从后往前。首先计算输出层的梯度，然后是第二个参数矩阵的梯度，接着是中间层的梯度，再然后是第一个参数矩阵的梯度，最后是输入层的梯度。计算结束以后，所要的两个参数矩阵的梯度就都有了。</p>
+<p>　　反向传播算法可以直观的理解为下图。梯度的计算从后往前，一层层反向传播。前缀E代表着相对导数的意思。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.png" alt=""></p>
+<p>　　反向传播算法的启示是数学中的<strong>链式法则</strong>。在此需要说明的是，尽管早期神经网络的研究人员努力从生物学中得到启发，但从BP算法开始，研究者们更多地从数学上寻求问题的最优解。不再盲目模拟人脑网络是神经网络研究走向成熟的标志。正如科学家们可以从鸟类的飞行中得到启发，但没有必要一定要完全模拟鸟类的飞行方式，也能制造可以飞天的飞机。</p>
+<p>　　优化问题只是训练中的一个部分。机器学习问题之所以称为学习问题，而不是优化问题，就是因为它不仅要求数据在训练集上求得一个较小的误差，在测试集上也要表现好。因为模型最终是要部署到没有见过训练数据的真实场景。提升模型在测试集上的预测效果的主题叫做<strong>泛化</strong>（generalization），相关方法被称作<strong>正则化</strong>（regularization）。神经网络中常用的泛化技术有<strong>权重衰减</strong>等。</p>
+<p>　　两层神经网络在多个地方的应用说明了其效用与价值。10年前困扰神经网络界的异或问题被轻松解决。神经网络在这个时候，已经可以发力于语音识别，图像识别，自动驾驶等多个领域。</p>
+<p>　　历史总是惊人的相似，神经网络的学者们再次登上了《纽约时报》的专访。人们认为神经网络可以解决许多问题。就连娱乐界都开始受到了影响，当年的《终结者》电影中的阿诺都赶时髦地说一句：我的CPU是一个神经网络处理器，一个会学习的计算机。</p>
+<p>　　但是神经网络仍然存在若干的问题：尽管使用了BP算法，一次神经网络的训练仍然耗时太久，而且困扰训练优化的一个问题就是局部最优解问题，这使得神经网络的优化较为困难。同时，隐藏层的节点数需要调参，这使得使用不太方便，工程和研究人员对此多有抱怨。</p>
+<p>　　90年代中期，由Vapnik等人发明的SVM（Support Vector Machines，支持向量机）算法诞生，很快就在若干个方面体现出了对比神经网络的优势：无需调参；高效；全局最优解。基于以上种种理由，SVM迅速打败了神经网络算法成为主流。</p>
+<p>　　神经网络的研究再次陷入了冰河期。当时，只要你的论文中包含神经网络相关的字眼，非常容易被会议和期刊拒收，研究界那时对神经网络的不待见可想而知。</p>
+<h4 id="多层神经网络"><a href="#多层神经网络" class="headerlink" title="多层神经网络"></a>多层神经网络</h4><h5 id="引子-3"><a href="#引子-3" class="headerlink" title="引子"></a>引子</h5><p>　　在被人摒弃的10年中，有几个学者仍然在坚持研究。这其中的棋手就是加拿大多伦多大学的Geoffery Hinton教授。</p>
+<p>　　2006年，Hinton在《Science》和相关期刊上发表了论文，首次提出了“深度信念网络”的概念。与传统的训练方式不同，“深度信念网络”有一个“预训练”（pre-training）的过程，这可以方便的让神经网络中的权值找到一个接近最优解的值，之后再使用“微调”(fine-tuning)技术来对整个网络进行优化训练。这两个技术的运用大幅度减少了训练多层神经网络的时间。他给多层神经网络相关的学习方法赋予了一个新名词–“深度学习”。</p>
+<p> 　　很快，深度学习在语音识别领域暂露头角。接着，2012年，深度学习技术又在图像识别领域大展拳脚。Hinton与他的学生在ImageNet竞赛中，用多层的卷积神经网络成功地对包含一千类别的一百万张图片进行了训练，取得了分类错误率15%的好成绩，这个成绩比第二名高了近11个百分点，充分证明了多层神经网络识别效果的优越性。</p>
+<p>　　在这之后，关于深度神经网络的研究与应用不断涌现。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151224145544656-1225191900.jpg" alt=""></p>
+<p>　　由于篇幅和时间的原因，我们这里不介绍CNN（Conventional Neural Network，卷积神经网络）与RNN（Recurrent Neural Network，递归神经网络）的架构，下面我们只讨论普通的多层神经网络。</p>
+<h5 id="结构-3"><a href="#结构-3" class="headerlink" title="结构"></a>结构</h5><p>　　我们延续两层神经网络的方式来设计一个多层神经网络。</p>
+<p>　　在两层神经网络的输出层后面，继续添加层次。原来的输出层变成中间层，新加的层次成为新的输出层。所以可以得到下图。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png" alt=""></p>
+<p>　　依照这样的方式不断添加，我们可以得到更多层的多层神经网络。公式推导的话其实跟两层神经网络类似，使用矩阵运算的话就仅仅是加一个公式而已。</p>
+<p>　　在已知输入<strong>a</strong><sup>(1)</sup>，参数<strong>W</strong><sup>(1)</sup>，<strong>W</strong><sup>(2)</sup>，<strong>W</strong><sup>(3)</sup>的情况下，输出z的推导公式：<strong>a</strong><sup>(2)</sup> = g(<strong>W</strong><sup>(1)</sup> • <strong>a</strong><sup>(1)</sup>), <strong>a</strong><sup>(3)</sup> = g(<strong>W</strong><sup>(2)</sup> • <strong>a</strong><sup>(2)</sup>), <strong>z</strong> = g(<strong>W</strong><sup>(3)</sup> • <strong>a</strong><sup>(3)</sup>).</p>
+<p>　　多层神经网络中，输出也是按照一层一层的方式来计算。从最外面的层开始，算出所有单元的值以后，再继续计算更深一层。只有当前层所有单元的值都计算完毕以后，才会算下一层。有点像计算向前不断推进的感觉。所以这个过程叫做“正向传播”。</p>
+<p>　　下面讨论一下多层神经网络中的参数。</p>
+<p>　　首先我们看第一张图，可以看出<strong>W</strong><sup>(1)</sup>中有6个参数，<strong>W</strong><sup>(2)</sup>中有4个参数，<strong>W</strong><sup>(3)</sup>中有6个参数，所以整个神经网络中的参数有16个。</p>
+<p>　　假设我们将中间层的节点数做一下调整。第一个中间层改为3个单元，第二个中间层改为4个单元。</p>
+<p>　　经过调整以后，整个网络的参数变成了33个。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2.png" alt=""></p>
+<p>　　虽然层数保持不变，但是第二个神经网络的参数数量却是第一个神经网络的接近两倍之多，从而带来了更好的表示（represention）能力。表示能力是多层神经网络的一个重要性质，下面会做介绍。</p>
+<p>　　在参数一致的情况下，我们也可以获得一个“更深”的网络。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3.png" alt=""></p>
+<p>　　上图的网络中，虽然参数数量仍然是33，但却有4个中间层，是原来层数的接近两倍。这意味着一样的参数数量，可以用更深的层次去表达。</p>
+<h5 id="应用-2"><a href="#应用-2" class="headerlink" title="应用"></a>应用</h5><p>　　与两层层神经网络不同。多层神经网络中的层数增加了很多。</p>
+<p>　　增加更多的层次有什么好处？更深入的表示特征，以及更强的函数模拟能力。</p>
+<p>　　更深入的表示特征可以这样理解，随着网络的层数增加，每一层对于前一层次的抽象表示更深入。在神经网络中，每一层神经元学习到的是前一层神经元值的更抽象的表示。例如第一个隐藏层学习到的是“边缘”的特征，第二个隐藏层学习到的是由“边缘”组成的“形状”的特征，第三个隐藏层学习到的是由“形状”组成的“图案”的特征，最后的隐藏层学习到的是由“图案”组成的“目标”的特征。通过抽取更抽象的特征来对事物进行区分，从而获得更好的区分与分类能力。</p>
+<p>　　关于逐层特征学习的例子，前面提到的Hubel-Wiesel试验就是一个很好的例子：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/%E7%8C%AB%E7%9A%84%E8%A7%86%E8%A7%89%E7%A0%94%E7%A9%B6.png" alt=""></p>
+<p>　　更强的函数模拟能力是由于随着层数的增加，整个网络的参数就越多。而神经网络其实本质就是模拟特征与目标之间的真实关系函数的方法，更多的参数意味着其模拟的函数可以更加的复杂，可以有更多的容量（capcity）去拟合真正的关系。</p>
+<p>　　通过研究发现，在参数数量一样的情况下，更深的网络往往具有比浅层的网络更好的识别效率。这点也在ImageNet的多次大赛中得到了证实。从2012年起，每年获得ImageNet冠军的深度神经网络的层数逐年增加，2015年最好的方法GoogleNet是一个多达22层的神经网络。</p>
+<p>　　在最新一届的ImageNet大赛上，目前拿到最好成绩的<a href="http://www.msra.cn/zh-cn/default.aspx" target="_blank" rel="external">MSRA(Microsoft Research Asia)</a>团队的方法使用的更是一个深达152层的网络！关于这个方法更多的信息有兴趣的可以查阅<a href="http://www.image-net.org" target="_blank" rel="external">ImageNet</a>网站。</p>
+<h5 id="训练-1"><a href="#训练-1" class="headerlink" title="训练"></a>训练</h5><p>　　在单层神经网络时，我们使用的激活函数是sgn函数。到了两层神经网络时，我们使用的最多的是sigmoid函数。而到了多层神经网络时，通过一系列的研究发现，ReLU函数在训练多层神经网络时，更容易收敛，并且预测性能更好。因此，目前在深度学习中，最流行的非线性函数是ReLU函数。ReLU函数不是传统的非线性函数，而是分段线性函数。其表达式非常简单，就是y=max(x,0)。简而言之，在x大于0，输出就是输入，而在x小于0时，输出就保持为0。这种函数的设计启发来自于生物神经元对于激励的线性响应，以及当低于某个阈值后就不再响应的模拟。</p>
+<p>　　在多层神经网络中，训练的主题仍然是优化和泛化。当使用足够强的计算芯片（例如GPU图形加速卡）时，梯度下降算法以及反向传播算法在多层神经网络中的训练中仍然工作的很好。目前学术界主要的研究既在于开发新的算法，也在于对这两个算法进行不断的优化，例如，增加了一种带动量因子（momentum）的梯度下降算法。　</p>
+<p>　　在深度学习中，泛化技术变的比以往更加的重要。这主要是因为神经网络的层数增加了，参数也增加了，表示能力大幅度增强，很容易出现过拟合现象。因此正则化技术就显得十分重要。目前，Dropout技术，以及数据扩容（Data-Augmentation）技术是目前使用的最多的正则化技术。</p>
+<h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>　　我们回顾一下神经网络发展的历程。神经网络的发展历史曲折荡漾，既有被人捧上天的时刻，也有摔落在街头无人问津的时段，中间经历了数次大起大落。</p>
+<p>　　从单层神经网络（感知器）开始，到包含一个隐藏层的两层神经网络，再到多层的深度神经网络，一共有三次兴起过程。详见下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228170208120-1856567090.jpg" alt=""></p>
+<p>　　上图中的顶点与谷底可以看作神经网络发展的高峰与低谷。图中的横轴是时间，以年为单位。纵轴是一个神经网络影响力的示意表示。如果把1949年Hebb模型提出到1958年的感知机诞生这个10年视为落下（没有兴起）的话，那么神经网络算是经历了“三起三落”这样一个过程，跟“小平”同志类似。俗话说，天将降大任于斯人也，必先苦其心志，劳其筋骨。经历过如此多波折的神经网络能够在现阶段取得成功也可以被看做是磨砺的积累吧。</p>
+<p>　　历史最大的好处是可以给现在做参考。科学的研究呈现螺旋形上升的过程，不可能一帆风顺。同时，这也给现在过分热衷深度学习与人工智能的人敲响警钟，因为这不是第一次人们因为神经网络而疯狂了。1958年到1969年，以及1985年到1995，这两个十年间人们对于神经网络以及人工智能的期待并不现在低，可结果如何大家也能看的很清楚。</p>
+<p>　　因此，冷静才是对待目前深度学习热潮的最好办法。如果因为深度学习火热，或者可以有“钱景”就一窝蜂的涌入，那么最终的受害人只能是自己。神经网络界已经两次有被人们捧上天了的境况，相信也对于捧得越高，摔得越惨这句话深有体会。因此，神经网络界的学者也必须给这股热潮浇上一盆水，不要让媒体以及投资家们过分的高看这门技术。很有可能，三十年河东，三十年河西，在几年后，神经网络就再次陷入谷底。根据上图的历史曲线图，这是很有可能的。</p>
+<p>　　下面说一下神经网络为什么能这么火热？简而言之，就是其学习效果的强大。随着神经网络的发展，其表示性能越来越强。</p>
+<p>　　从单层神经网络，到两层神经网络，再到多层神经网络，下图说明了，随着网络层数的增加，以及激活函数的调整，神经网络所能拟合的决策分界平面的能力。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228134016120-1091351096.jpg" alt=""></p>
+<p>　　可以看出，随着层数增加，其非线性分界拟合能力不断增强。图中的分界线并不代表真实训练出的效果，更多的是示意效果。</p>
+<p>　　神经网络的研究与应用之所以能够不断地火热发展下去，与其强大的函数拟合能力是分不开关系的。　</p>
+<p>　　当然，光有强大的内在能力，并不一定能成功。一个成功的技术与方法，不仅需要内因的作用，还需要时势与环境的配合。神经网络的发展背后的外在原因可以被总结为：更强的计算性能，更多的数据，以及更好的训练方法。只有满足这些条件时，神经网络的函数拟合能力才能得已体现，见下图：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/673793-20151228170149135-2107087462.jpg" alt=""></p>
+<p>　　之所以在单层神经网络年代，Rosenblat无法制作一个双层分类器，就在于当时的计算性能不足，Minsky也以此来打压神经网络。但是Minsky没有料到，仅仅10年以后，计算机CPU的快速发展已经使得我们可以做两层神经网络的训练，并且还有快速的学习算法BP。</p>
+<p>　　但是在两层神经网络快速流行的年代。更高层的神经网络由于计算性能的问题，以及一些计算方法的问题，其优势无法得到体现。直到2012年，研究人员发现，用于高性能计算的图形加速卡（GPU）可以极佳地匹配神经网络训练所需要的要求：高并行性，高存储，没有太多的控制需求，配合预训练等算法，神经网络才得以大放光彩。</p>
+<p>　　互联网时代，大量的数据被收集整理，更好的训练方法不断被发现。所有这一切都满足了多层神经网络发挥能力的条件。</p>
+<p>　　“时势造英雄”，正如Hinton在2006年的论文里说道的</p>
+<blockquote>
+<p>…provided that computers were fast enough, data sets were big enough, and the initial weights were close enough to a good solution. All three conditions are now satisfied.</p>
+</blockquote>
+<p>　　外在条件的满足也是神经网络从神经元得以发展到目前的深度神经网络的重要因素。</p>
+<h3 id="建立神经网络"><a href="#建立神经网络" class="headerlink" title="建立神经网络"></a>建立神经网络</h3><p>&emsp;&emsp;介绍完神经网络的概况，我们来尝试建立一个具有一个输入层，一个隐藏层，一个输出层的神经网络。输入层的节点数由数据的维度决定，这里是2；输出层的节点数由类别的数量决定，这里也是2。因为我们只有两类输出，实际中我们会避免只使用一个输出结点预测0和1，而是使用两个输出结点以使网络以后能很容易地扩充到更多的类别。在这里，网络的输入是坐标，输出的是概率，一个是0的概率，一个是1的概率。</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ANN%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt=""></p>
+<p>&emsp;&emsp;我们可以设定隐藏层的结点数。放入隐藏层的结点越多，我们能训练的函数也就越复杂，但同时，训练的代价与维度（隐藏层结点数）是成正相关的。预测和学习网络的参数越多就需要更多的计算时间，参数越多也就意味着我们可能会过度拟合数据（这点在之后给大家讲）。</p>
+<p>&emsp;&emsp;在神经网络中，每个处理单元事实上就是一个逻辑回归模型，逻辑回归模型接收上层的输入，把模型的预测结果作为输出传输到下一个层次。通过这样的过程，神经网络可以完成非常复杂的非线性分类。</p>
+<p>&emsp;&emsp;我们还需要为隐藏层挑选一个激活函数。激活函数将该层的输入转换为输出。一个非线性激活函数允许我们拟合非线性假设。常用的激活函数有<a href="https://en.wikipedia.org/wiki/Sigmoid_function" target="_blank" rel="external">sigmoid函数</a>或者是<a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks" target="_blank" rel="external">ReLUs</a>)。这里我们选择使用在很多场景下都能表现很好的tanh函数。</p>
+<p>&emsp;&emsp;因为我们想要得到神经网络输出概率，所以输出层的激活函数就要是<a href="https://en.wikipedia.org/wiki/Softmax_function" target="_blank" rel="external">softmax</a>。这是一种将原始分数转换为概率的方法。如果你很熟悉logistic回归，可以把softmax看作是它在多类别上的一般化。</p>
+<p>&emsp;&emsp;输出层为softmax时多会选择交叉熵损失（cross-entropy loss）最为损失函数。假如我们有N个训练例子和C个分类，那么预测值（hat{y}）相对真实标签值的损失就由下列公式给出：</p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/6941baebjw1ew6gxfmjqgj206e018a9w.jpg" alt=""></p>
+<p>&emsp;&emsp;这个公式看起来很复杂，但实际上它所做的事情不过是把所有训练例子求和，然后加上预测值错误的损失。所以，预测值距离真实标签值越远，损失值就越大。至于为什么这里不采用欧式距离来计算，大家可以参考信息论中的信息熵的知识。</p>
+<p>&emsp;&emsp;要记住，我们的目标是找到能最小化损失函数的参数值。我们可以使用梯度下降方法找到最小值。我会实现<a href="https://en.wikipedia.org/wiki/Gradient_descent" target="_blank" rel="external">最速下降法</a>的一种最普通的版本。诸如SGD（随机梯度下降）或minibatch梯度下降通常在实践中有更好的表现。所以，如果你是认真的，这些可能才是你的选择，最好还能<a href="http://cs231n.github.io/neural-networks-3/#anneal" target="_blank" rel="external">逐步衰减学习率</a>。</p>
+<p>&emsp;&emsp;我们住了使用前文中提到的后向传播算法。在这里我不会深入讲解后向传播如何工作，但是在网络上流传有很多很优秀的讲解（参见<a href="http://colah.github.io/posts/2015-08-Backprop/" target="_blank" rel="external">colah的博文-Calculus on Computational Graphs: Backpropagation</a>）。</p>
+<p>现在我们要准备开始实现网络了。我们从定义梯度下降一些有用的变量和参数开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">num_examples = len(X) <span class="comment"># training set size</span></div><div class="line">nn_input_dim = <span class="number">2</span> <span class="comment"># input layer dimensionality</span></div><div class="line">nn_output_dim = <span class="number">2</span> <span class="comment"># output layer dimensionality</span></div><div class="line"></div><div class="line"><span class="comment"># Gradient descent parameters (I picked these by hand)</span></div><div class="line">epsilon = <span class="number">0.01</span> <span class="comment"># learning rate for gradient descent</span></div><div class="line">reg_lambda = <span class="number">0.01</span> <span class="comment"># regularization strength</span></div></pre></td></tr></table></figure>
+<p>接着要实现我们上面定义的损失函数。以此来衡量我们的模型工作得如何：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Helper function to evaluate the total loss on the dataset</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate_loss</span><span class="params">(model)</span>:</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation to calculate our predictions</span></div><div class="line">    z1 = X.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="comment"># Calculating the loss</span></div><div class="line">    corect_logprobs = -np.log(probs[range(num_examples), y])</div><div class="line">    data_loss = np.sum(corect_logprobs)</div><div class="line">    <span class="comment"># Add regulatization term to loss (optional)</span></div><div class="line">    data_loss += reg_lambda/<span class="number">2</span> * (np.sum(np.square(W1)) + np.sum(np.square(W2)))</div><div class="line">    <span class="keyword">return</span> <span class="number">1.</span>/num_examples * data_loss</div></pre></td></tr></table></figure>
+<p>还要实现一个辅助函数来计算网络的输出。它的工作就是传递前面定义的前向传播并返回概率最高的类别。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Helper function to predict an output (0 or 1)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(model, x)</span>:</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation</span></div><div class="line">    z1 = x.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> np.argmax(probs, axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>最后是训练神经网络的函数。它使用上文中发现的后向传播导数实现批量梯度下降。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># This function learns parameters for the neural network and returns the model.</span></div><div class="line"><span class="comment"># - nn_hdim: Number of nodes in the hidden layer</span></div><div class="line"><span class="comment"># - num_passes: Number of passes through the training data for gradient descent</span></div><div class="line"><span class="comment"># - print_loss: If True, print the loss every 1000 iterations</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(nn_hdim, num_passes=<span class="number">20000</span>, print_loss=False)</span>:</span></div><div class="line"></div><div class="line">    <span class="comment"># Initialize the parameters to random values. We need to learn these.</span></div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    W1 = np.random.randn(nn_input_dim, nn_hdim) / np.sqrt(nn_input_dim)</div><div class="line">    b1 = np.zeros((<span class="number">1</span>, nn_hdim))</div><div class="line">    W2 = np.random.randn(nn_hdim, nn_output_dim) / np.sqrt(nn_hdim)</div><div class="line">    b2 = np.zeros((<span class="number">1</span>, nn_output_dim))</div><div class="line"></div><div class="line">    <span class="comment"># This is what we return at the end</span></div><div class="line">    model = &#123; &#125;</div><div class="line"></div><div class="line">    <span class="comment"># Gradient descent. For each batch...</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, num_passes):</div><div class="line"></div><div class="line">        <span class="comment"># Forward propagation</span></div><div class="line">        z1 = X.dot(W1) + b1</div><div class="line">        a1 = np.tanh(z1)</div><div class="line">        z2 = a1.dot(W2) + b2</div><div class="line">        exp_scores = np.exp(z2)</div><div class="line">        probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Backpropagation</span></div><div class="line">        delta3 = probs</div><div class="line">        delta3[range(num_examples), y] -= <span class="number">1</span></div><div class="line">        dW2 = (a1.T).dot(delta3)</div><div class="line">        db2 = np.sum(delta3, axis=<span class="number">0</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">        delta2 = delta3.dot(W2.T) * (<span class="number">1</span> - np.power(a1, <span class="number">2</span>))</div><div class="line">        dW1 = np.dot(X.T, delta2)</div><div class="line">        db1 = np.sum(delta2, axis=<span class="number">0</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Add regularization terms (b1 and b2 don't have regularization terms)</span></div><div class="line">        dW2 += reg_lambda * W2</div><div class="line">        dW1 += reg_lambda * W1</div><div class="line"></div><div class="line">        <span class="comment"># Gradient descent parameter update</span></div><div class="line">        W1 += -epsilon * dW1</div><div class="line">        b1 += -epsilon * db1</div><div class="line">        W2 += -epsilon * dW2</div><div class="line">        b2 += -epsilon * db2</div><div class="line"></div><div class="line">        <span class="comment"># Assign new parameters to the model</span></div><div class="line">        model = &#123; <span class="string">'W1'</span>: W1, <span class="string">'b1'</span>: b1, <span class="string">'W2'</span>: W2, <span class="string">'b2'</span>: b2&#125;</div><div class="line"></div><div class="line">        <span class="comment"># Optionally print the loss.</span></div><div class="line">        <span class="comment"># This is expensive because it uses the whole dataset, so we don't want to do it too often.</span></div><div class="line">        <span class="keyword">if</span> print_loss <span class="keyword">and</span> i % <span class="number">1000</span> == <span class="number">0</span>:</div><div class="line">          <span class="keyword">print</span> <span class="string">"Loss after iteration %i: %f"</span> %(i, calculate_loss(model))</div><div class="line"></div><div class="line">    <span class="keyword">return</span> model</div></pre></td></tr></table></figure>
+<p>下面贴出完整的代码，一起来看看假如我们训练了一个隐藏层规模为3的神经网络会发生什么。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, linear_model</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></div><div class="line">    nn_input_dim = <span class="number">2</span>  <span class="comment"># input layer dimensionality</span></div><div class="line">    nn_output_dim = <span class="number">2</span>  <span class="comment"># output layer dimensionality</span></div><div class="line">    <span class="comment"># Gradient descent parameters (I picked these by hand)</span></div><div class="line">    epsilon = <span class="number">0.01</span>  <span class="comment"># learning rate for gradient descent</span></div><div class="line">    reg_lambda = <span class="number">0.01</span>  <span class="comment"># regularization strength</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_data</span><span class="params">()</span>:</span></div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    X, y = datasets.make_moons(<span class="number">300</span>, noise=<span class="number">0.20</span>)</div><div class="line">    <span class="keyword">return</span> X, y</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">visualize</span><span class="params">(X, y, model)</span>:</span></div><div class="line">    plot_decision_boundary(<span class="keyword">lambda</span> x:predict(model,x), X, y)</div><div class="line">    fig = matplotlib.pyplot.gcf()</div><div class="line">    fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span><span class="params">(pred_func, X, y)</span>:</span></div><div class="line">    <span class="comment"># Set min and max values and give it some padding</span></div><div class="line">    x_min, x_max = X[:, <span class="number">0</span>].min() - <span class="number">.5</span>, X[:, <span class="number">0</span>].max() + <span class="number">.5</span></div><div class="line">    y_min, y_max = X[:, <span class="number">1</span>].min() - <span class="number">.5</span>, X[:, <span class="number">1</span>].max() + <span class="number">.5</span></div><div class="line">    h = <span class="number">0.01</span></div><div class="line">    <span class="comment"># Generate a grid of points with distance h between them</span></div><div class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</div><div class="line">    <span class="comment"># Predict the function value for the whole gid</span></div><div class="line">    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])</div><div class="line">    Z = Z.reshape(xx.shape)</div><div class="line">    <span class="comment"># Plot the contour and training examples</span></div><div class="line">    plt.xkcd()</div><div class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</div><div class="line">    plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], s=<span class="number">60</span>, c=y, cmap=plt.cm.Spectral)</div><div class="line">    plt.title(<span class="string">"Decision Boundary for hidden layer size 3"</span>)</div><div class="line">    <span class="comment"># plt.show()</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Helper function to evaluate the total loss on the dataset</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate_loss</span><span class="params">(model, X, y)</span>:</span></div><div class="line">    num_examples = len(X)  <span class="comment"># training set size</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation to calculate our predictions</span></div><div class="line">    z1 = X.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="comment"># Calculating the loss</span></div><div class="line">    corect_logprobs = -np.log(probs[range(num_examples), y])</div><div class="line">    data_loss = np.sum(corect_logprobs)</div><div class="line">    <span class="comment"># Add regulatization term to loss (optional)</span></div><div class="line">    data_loss += Config.reg_lambda / <span class="number">2</span> * (np.sum(np.square(W1)) + np.sum(np.square(W2)))</div><div class="line">    <span class="keyword">return</span> <span class="number">1.</span> / num_examples * data_loss</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(model, x)</span>:</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation</span></div><div class="line">    z1 = x.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> np.argmax(probs, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># This function learns parameters for the neural network and returns the model.</span></div><div class="line"><span class="comment"># - nn_hdim: Number of nodes in the hidden layer</span></div><div class="line"><span class="comment"># - num_passes: Number of passes through the training data for gradient descent</span></div><div class="line"><span class="comment"># - print_loss: If True, print the loss every 1000 iterations</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(X, y, nn_hdim, num_passes=<span class="number">20000</span>, print_loss=False)</span>:</span></div><div class="line">    <span class="comment"># Initialize the parameters to random values. We need to learn these.</span></div><div class="line">    num_examples = len(X)</div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    W1 = np.random.randn(Config.nn_input_dim, nn_hdim) / np.sqrt(Config.nn_input_dim)</div><div class="line">    b1 = np.zeros((<span class="number">1</span>, nn_hdim))</div><div class="line">    W2 = np.random.randn(nn_hdim, Config.nn_output_dim) / np.sqrt(nn_hdim)</div><div class="line">    b2 = np.zeros((<span class="number">1</span>, Config.nn_output_dim))</div><div class="line"></div><div class="line">    <span class="comment"># This is what we return at the end</span></div><div class="line">    model = &#123; &#125;</div><div class="line"></div><div class="line">    <span class="comment"># Gradient descent. For each batch...</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_passes):</div><div class="line"></div><div class="line">        <span class="comment"># Forward propagation</span></div><div class="line">        z1 = X.dot(W1) + b1</div><div class="line">        a1 = np.tanh(z1)</div><div class="line">        z2 = a1.dot(W2) + b2</div><div class="line">        exp_scores = np.exp(z2)</div><div class="line">        probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Backpropagation</span></div><div class="line">        delta3 = probs</div><div class="line">        delta3[range(num_examples), y] -= <span class="number">1</span></div><div class="line">        dW2 = (a1.T).dot(delta3)</div><div class="line">        db2 = np.sum(delta3, axis=<span class="number">0</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">        delta2 = delta3.dot(W2.T) * (<span class="number">1</span> - np.power(a1, <span class="number">2</span>))</div><div class="line">        dW1 = np.dot(X.T, delta2)</div><div class="line">        db1 = np.sum(delta2, axis=<span class="number">0</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Add regularization terms (b1 and b2 don't have regularization terms)</span></div><div class="line">        dW2 += Config.reg_lambda * W2</div><div class="line">        dW1 += Config.reg_lambda * W1</div><div class="line"></div><div class="line">        <span class="comment"># Gradient descent parameter update</span></div><div class="line">        W1 += -Config.epsilon * dW1</div><div class="line">        b1 += -Config.epsilon * db1</div><div class="line">        W2 += -Config.epsilon * dW2</div><div class="line">        b2 += -Config.epsilon * db2</div><div class="line"></div><div class="line">        <span class="comment"># Assign new parameters to the model</span></div><div class="line">        model = &#123;<span class="string">'W1'</span>: W1, <span class="string">'b1'</span>: b1, <span class="string">'W2'</span>: W2, <span class="string">'b2'</span>: b2&#125;</div><div class="line"></div><div class="line">        <span class="comment"># Optionally print the loss.</span></div><div class="line">        <span class="comment"># This is expensive because it uses the whole dataset, so we don't want to do it too often.</span></div><div class="line">        <span class="keyword">if</span> print_loss <span class="keyword">and</span> i % <span class="number">1000</span> == <span class="number">0</span>:</div><div class="line">            print(<span class="string">"Loss after iteration %i: %f"</span> % (i, calculate_loss(model, X, y)))</div><div class="line"></div><div class="line">    <span class="keyword">return</span> model</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(X, y)</span>:</span></div><div class="line">    <span class="comment"># clf = linear_model.LogisticRegressionCV()</span></div><div class="line">    <span class="comment"># clf.fit(X, y)</span></div><div class="line">    <span class="comment"># return clf</span></div><div class="line"></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    X, y = generate_data()</div><div class="line">    model = build_model(X, y, <span class="number">3</span>, print_loss=<span class="keyword">True</span>)</div><div class="line">    visualize(X, y, model)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<pre><code>Loss after iteration 0: 0.381135
+Loss after iteration 1000: 0.065193
+Loss after iteration 2000: 0.062375
+Loss after iteration 3000: 0.062123
+Loss after iteration 4000: 0.062039
+Loss after iteration 5000: 0.062626
+Loss after iteration 6000: 0.063454
+Loss after iteration 7000: 0.063059
+Loss after iteration 8000: 0.062421
+Loss after iteration 9000: 0.067547
+Loss after iteration 10000: 0.062120
+Loss after iteration 11000: 0.061861
+Loss after iteration 12000: 0.064949
+Loss after iteration 13000: 0.061784
+Loss after iteration 14000: 0.064258
+Loss after iteration 15000: 0.062042
+Loss after iteration 16000: 0.062150
+Loss after iteration 17000: 0.064294
+Loss after iteration 18000: 0.062985
+Loss after iteration 19000: 0.063395
+</code></pre><p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_13_1.png" alt="png"></p>
+<p>这看起来结果相当不错。我们的神经网络能够找到成功区分类别的决策边界。</p>
+<p>在上述例子中，我们选择了隐藏层规模为3。现在来看看改变隐藏层规模会对结果造成怎样的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, linear_model</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> time</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></div><div class="line">    nn_input_dim = <span class="number">2</span>  <span class="comment"># input layer dimensionality</span></div><div class="line">    nn_output_dim = <span class="number">2</span>  <span class="comment"># output layer dimensionality</span></div><div class="line">    <span class="comment"># Gradient descent parameters (I picked these by hand)</span></div><div class="line">    epsilon = <span class="number">0.01</span>  <span class="comment"># learning rate for gradient descent</span></div><div class="line">    reg_lambda = <span class="number">0.01</span>  <span class="comment"># regularization strength</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_data</span><span class="params">()</span>:</span></div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    X, y = datasets.make_moons(<span class="number">300</span>, noise=<span class="number">0.20</span>)</div><div class="line">    <span class="keyword">return</span> X, y</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">visualize</span><span class="params">(X, y, model)</span>:</span></div><div class="line">    plot_decision_boundary(<span class="keyword">lambda</span> x:predict(model,x), X, y)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span><span class="params">(pred_func, X, y)</span>:</span></div><div class="line">    <span class="comment"># Set min and max values and give it some padding</span></div><div class="line">    x_min, x_max = X[:, <span class="number">0</span>].min() - <span class="number">.5</span>, X[:, <span class="number">0</span>].max() + <span class="number">.5</span></div><div class="line">    y_min, y_max = X[:, <span class="number">1</span>].min() - <span class="number">.5</span>, X[:, <span class="number">1</span>].max() + <span class="number">.5</span></div><div class="line">    h = <span class="number">0.01</span></div><div class="line">    <span class="comment"># Generate a grid of points with distance h between them</span></div><div class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</div><div class="line">    <span class="comment"># Predict the function value for the whole gid</span></div><div class="line">    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])</div><div class="line">    Z = Z.reshape(xx.shape)</div><div class="line">    <span class="comment"># Plot the contour and training examples</span></div><div class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</div><div class="line">    plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=y, cmap=plt.cm.Spectral)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Helper function to evaluate the total loss on the dataset</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate_loss</span><span class="params">(model, X, y)</span>:</span></div><div class="line">    num_examples = len(X)  <span class="comment"># training set size</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation to calculate our predictions</span></div><div class="line">    z1 = X.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="comment"># Calculating the loss</span></div><div class="line">    corect_logprobs = -np.log(probs[range(num_examples), y])</div><div class="line">    data_loss = np.sum(corect_logprobs)</div><div class="line">    <span class="comment"># Add regulatization term to loss (optional)</span></div><div class="line">    data_loss += Config.reg_lambda / <span class="number">2</span> * (np.sum(np.square(W1)) + np.sum(np.square(W2)))</div><div class="line">    <span class="keyword">return</span> <span class="number">1.</span> / num_examples * data_loss</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(model, x)</span>:</span></div><div class="line">    W1, b1, W2, b2 = model[<span class="string">'W1'</span>], model[<span class="string">'b1'</span>], model[<span class="string">'W2'</span>], model[<span class="string">'b2'</span>]</div><div class="line">    <span class="comment"># Forward propagation</span></div><div class="line">    z1 = x.dot(W1) + b1</div><div class="line">    a1 = np.tanh(z1)</div><div class="line">    z2 = a1.dot(W2) + b2</div><div class="line">    exp_scores = np.exp(z2)</div><div class="line">    probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> np.argmax(probs, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># This function learns parameters for the neural network and returns the model.</span></div><div class="line"><span class="comment"># - nn_hdim: Number of nodes in the hidden layer</span></div><div class="line"><span class="comment"># - num_passes: Number of passes through the training data for gradient descent</span></div><div class="line"><span class="comment"># - print_loss: If True, print the loss every 1000 iterations</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(X, y, nn_hdim, num_passes=<span class="number">20000</span>, print_loss=False)</span>:</span></div><div class="line">    <span class="comment"># Initialize the parameters to random values. We need to learn these.</span></div><div class="line">    num_examples = len(X)</div><div class="line">    np.random.seed(<span class="number">0</span>)</div><div class="line">    W1 = np.random.randn(Config.nn_input_dim, nn_hdim) / np.sqrt(Config.nn_input_dim)</div><div class="line">    b1 = np.zeros((<span class="number">1</span>, nn_hdim))</div><div class="line">    W2 = np.random.randn(nn_hdim, Config.nn_output_dim) / np.sqrt(nn_hdim)</div><div class="line">    b2 = np.zeros((<span class="number">1</span>, Config.nn_output_dim))</div><div class="line"></div><div class="line">    <span class="comment"># This is what we return at the end</span></div><div class="line">    model = &#123; &#125;</div><div class="line"></div><div class="line">    <span class="comment"># Gradient descent. For each batch...</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_passes):</div><div class="line"></div><div class="line">        <span class="comment"># Forward propagation</span></div><div class="line">        z1 = X.dot(W1) + b1</div><div class="line">        a1 = np.tanh(z1)</div><div class="line">        z2 = a1.dot(W2) + b2</div><div class="line">        exp_scores = np.exp(z2)</div><div class="line">        probs = exp_scores / np.sum(exp_scores, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Backpropagation</span></div><div class="line">        delta3 = probs</div><div class="line">        delta3[range(num_examples), y] -= <span class="number">1</span></div><div class="line">        dW2 = (a1.T).dot(delta3)</div><div class="line">        db2 = np.sum(delta3, axis=<span class="number">0</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">        delta2 = delta3.dot(W2.T) * (<span class="number">1</span> - np.power(a1, <span class="number">2</span>))</div><div class="line">        dW1 = np.dot(X.T, delta2)</div><div class="line">        db1 = np.sum(delta2, axis=<span class="number">0</span>)</div><div class="line"></div><div class="line">        <span class="comment"># Add regularization terms (b1 and b2 don't have regularization terms)</span></div><div class="line">        dW2 += Config.reg_lambda * W2</div><div class="line">        dW1 += Config.reg_lambda * W1</div><div class="line"></div><div class="line">        <span class="comment"># Gradient descent parameter update</span></div><div class="line">        W1 += -Config.epsilon * dW1</div><div class="line">        b1 += -Config.epsilon * db1</div><div class="line">        W2 += -Config.epsilon * dW2</div><div class="line">        b2 += -Config.epsilon * db2</div><div class="line"></div><div class="line">        <span class="comment"># Assign new parameters to the model</span></div><div class="line">        model = &#123;<span class="string">'W1'</span>: W1, <span class="string">'b1'</span>: b1, <span class="string">'W2'</span>: W2, <span class="string">'b2'</span>: b2&#125;</div><div class="line"></div><div class="line">        <span class="comment"># Optionally print the loss.</span></div><div class="line">        <span class="comment"># This is expensive because it uses the whole dataset, so we don't want to do it too often.</span></div><div class="line">        <span class="keyword">if</span> print_loss <span class="keyword">and</span> i % <span class="number">1000</span> == <span class="number">0</span>:</div><div class="line">            print(<span class="string">"Loss after iteration %i: %f"</span> % (i, calculate_loss(model, X, y)))</div><div class="line"></div><div class="line">    <span class="keyword">return</span> model</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    X, y = generate_data()</div><div class="line">    plt.figure(figsize=(<span class="number">16</span>, <span class="number">32</span>))</div><div class="line">    hidden_layer_dimensions = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">20</span>, <span class="number">50</span>, <span class="number">100</span>]</div><div class="line">    <span class="keyword">for</span> i, nn_hdim <span class="keyword">in</span> enumerate(hidden_layer_dimensions):</div><div class="line">        start = time.clock()</div><div class="line">        plt.subplot(<span class="number">5</span>, <span class="number">2</span>, i+<span class="number">1</span>)</div><div class="line">        model = build_model(X, y, nn_hdim)</div><div class="line">        plot_decision_boundary(<span class="keyword">lambda</span> x:predict(model,x), X, y)</div><div class="line">        end = time.clock()</div><div class="line">        plt.title(<span class="string">"Hidden Layer size %d, consuming time: %d s"</span> % (nn_hdim, end-start))</div><div class="line"><span class="comment">#         print "Hidden Layer size %d, consuming time: %d s" % (nn_hdim, end-start)</span></div><div class="line">    plt.show()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/output_15_0.png" alt="png"></p>
+<p>&emsp;&emsp;可以看到，低维隐藏层能够很好地捕捉到数据的总体趋势。更高的维度则更倾向于过拟合，由于时间限制，这里我没办法详细介绍过拟合，大家请参见<a href="http://www.07net01.com/2016/03/1387426.html" target="_blank" rel="external">一篇文章,带你明白什么是过拟合,欠拟合以及交叉验证</a>。它们更像是在“记忆”数据而不是拟合数据的大体形状。假如我们打算在独立测试集上评测该模型（你也应当这样做），隐藏层规模较小的模型会因为能更好的泛化而表现更好。虽然我们可以使用更强的泛化来抵消过拟合，但是为隐藏层选择一个合适的规模无疑是更加“经济”的方案。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://class.coursera.org/ml-007/" target="_blank" rel="external">Andrew Ng Courera Machine Learning</a></li>
+<li><a href="https://www.doc.ic.ac.uk/~nd/surprise_96/journal/vol4/cs11/report.html" target="_blank" rel="external">Neural Networks</a></li>
+<li><a href="http://www.36dsj.com/archives/20804" target="_blank" rel="external">神经网络简史</a></li>
+<li><a href="http://www.intsci.ac.cn/shizz/course/kd08.ppt" target="_blank" rel="external">中科院 史忠植 神经网络 讲义</a></li>
+<li><a href="http://caai.cn/contents/118/1934.html" target="_blank" rel="external">深度学习 胡晓林</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="Viper WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Viper Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/2016年/" rel="tag"># 2016年</a>
+          
+            <a href="/tags/七月/" rel="tag"># 七月</a>
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/03/qh/" rel="next" title="青春为伴，玩转青海">
+                <i class="fa fa-chevron-left"></i> 青春为伴，玩转青海
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/04/鸢尾花分类及sklearn实现/" rel="prev" title="鸢尾花分类及sklearn实现">
+                鸢尾花分类及sklearn实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/13/ml/"
+     data-title="The Beginning of Machine Learning | 机器学习初步"
+     data-content=""
+     data-url="http://b.yczhou.cn/2016/07/13/ml/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/13/ml/"
+           data-title="The Beginning of Machine Learning | 机器学习初步" data-url="http://b.yczhou.cn/2016/07/13/ml/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://b.yczhou.cn/avatar.png"
+               alt="Viper" />
+          <p class="site-author-name" itemprop="name">Viper</p>
+           
+              <p class="site-description motion-element" itemprop="description">倔驴一头，爱登山，爱徒步，喜欢一个人瞎捣鼓</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ycZhou" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/Nathanaiel-Chou" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/zhou-ying-cheng-61" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/nathanael.chou" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yczhou94" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/yczhou" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://stackoverflow.com/users/6556966/nathaniel-zhou" target="_blank" title="Stack-overflow">
+                  
+                    <i class="fa fa-fw fa-stack-overflow"></i>
+                  
+                  Stack-overflow
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是机器学习-？"><span class="nav-number">1.</span> <span class="nav-text">什么是机器学习 ？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个故事说明什么是机器学习"><span class="nav-number">1.1.</span> <span class="nav-text">一个故事说明什么是机器学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#机器学习的定义："><span class="nav-number">1.2.</span> <span class="nav-text">机器学习的定义：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#机器学习的算法"><span class="nav-number">1.3.</span> <span class="nav-text">机器学习的算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建-CentOS-6-5"><span class="nav-number">2.</span> <span class="nav-text">环境搭建(CentOS 6.5)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从头开始实现神经网络：入门"><span class="nav-number">3.</span> <span class="nav-text">从头开始实现神经网络：入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产生数据集"><span class="nav-number">3.1.</span> <span class="nav-text">产生数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic回归"><span class="nav-number">3.2.</span> <span class="nav-text">Logistic回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络浅讲"><span class="nav-number">3.3.</span> <span class="nav-text">神经网络浅讲</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#神经元"><span class="nav-number">3.3.1.</span> <span class="nav-text">神经元</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引子"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结构"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">结构</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单层神经网络（感知器）"><span class="nav-number">3.3.2.</span> <span class="nav-text">单层神经网络（感知器）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引子-1"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结构-1"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两层神经网络"><span class="nav-number">3.3.3.</span> <span class="nav-text">两层神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引子-2"><span class="nav-number">3.3.3.1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结构-2"><span class="nav-number">3.3.3.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用-1"><span class="nav-number">3.3.3.3.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#训练"><span class="nav-number">3.3.3.4.</span> <span class="nav-text">训练</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多层神经网络"><span class="nav-number">3.3.4.</span> <span class="nav-text">多层神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引子-3"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结构-3"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用-2"><span class="nav-number">3.3.4.3.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#训练-1"><span class="nav-number">3.3.4.4.</span> <span class="nav-text">训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">3.4.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立神经网络"><span class="nav-number">3.5.</span> <span class="nav-text">建立神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Viper</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yczhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("5yIrpLW3rA4Y9XrwcAQ8ySW1-gzGzoHsz", "4BypNGWdW0iF5SJlC9KthyIL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

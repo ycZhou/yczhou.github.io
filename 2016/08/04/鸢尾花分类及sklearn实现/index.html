@@ -1,0 +1,1088 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,机器学习,2016年,八月," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍前一段时间在学校数学建模培训的课程上给大家讲了神经网络的相关内容，由于准备时间比较紧张，后面的案例分析部分讲得也不是很详细，这里给大家讲一讲鸢尾花分类相关的东西。上次将鸢尾花分类的代码（神经网络，Matlab）代码给了大家，这里我主要是用Python写的。至于为什么要用Python，我这里就不再赘述了。之前已经给大家讲过如何用神经网络实现分类，这里我主要是想给大家看看机器学期的其他算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鸢尾花分类及sklearn实现">
+<meta property="og:url" content="http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/index.html">
+<meta property="og:site_name" content="Viper's Notebook">
+<meta property="og:description" content="背景介绍前一段时间在学校数学建模培训的课程上给大家讲了神经网络的相关内容，由于准备时间比较紧张，后面的案例分析部分讲得也不是很详细，这里给大家讲一讲鸢尾花分类相关的东西。上次将鸢尾花分类的代码（神经网络，Matlab）代码给了大家，这里我主要是用Python写的。至于为什么要用Python，我这里就不再赘述了。之前已经给大家讲过如何用神经网络实现分类，这里我主要是想给大家看看机器学期的其他算法。">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_7_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywh20150430172825252.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywh20150430172928120.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_2.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_3.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_4.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_5.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_21_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_36_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_42_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_44_0.png">
+<meta property="og:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_46_0.png">
+<meta property="og:updated_time" content="2017-02-28T13:03:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="鸢尾花分类及sklearn实现">
+<meta name="twitter:description" content="背景介绍前一段时间在学校数学建模培训的课程上给大家讲了神经网络的相关内容，由于准备时间比较紧张，后面的案例分析部分讲得也不是很详细，这里给大家讲一讲鸢尾花分类相关的东西。上次将鸢尾花分类的代码（神经网络，Matlab）代码给了大家，这里我主要是用Python写的。至于为什么要用Python，我这里就不再赘述了。之前已经给大家讲过如何用神经网络实现分类，这里我主要是想给大家看看机器学期的其他算法。">
+<meta name="twitter:image" content="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_7_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/"/>
+
+
+
+
+
+  <title> 鸢尾花分类及sklearn实现 | Viper's Notebook </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=56939218";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Viper's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生命不息，挖坑不止</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Viper">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://b.yczhou.cn/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Viper's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                鸢尾花分类及sklearn实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-04T15:17:00+08:00">
+                2016-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/04/鸢尾花分类及sklearn实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/04/鸢尾花分类及sklearn实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/04/鸢尾花分类及sklearn实现/" class="leancloud_visitors" data-flag-title="鸢尾花分类及sklearn实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>前一段时间在学校数学建模培训的课程上给大家讲了神经网络的相关内容，由于准备时间比较紧张，后面的案例分析部分讲得也不是很详细，这里给大家讲一讲鸢尾花分类相关的东西。上次将鸢尾花分类的代码（神经网络，Matlab）代码给了大家，这里我主要是用Python写的。至于为什么要用Python，我这里就不再赘述了。之前已经给大家讲过如何用神经网络实现分类，这里我主要是想给大家看看机器学期的其他算法。<br><a id="more"></a><br>鸢尾花数据是一个简易有趣的数据集。这个数据集来源于科学家在一岛上找到一种花的三种不同亚类别，分别叫做setosa,versicolor,virginica。但是这三个种类并不是很好分辩，所以他们又从花萼长度，花萼宽度，花瓣长度，花瓣宽度这四个角度测量不同的种类用于定量分析。基于这四个特征，这些数据成了一个多重变量分析的数据集。下面，我们就利用sklearn试着从不同的角度去分析一下这个数据集。在我篇博文“<a href="http://b.yczhou.cn/2016/07/13/ml/#环境搭建-CentOS-6-5">The Beginning of Machine Learning | 机器学习初步</a>“中有介绍如何在CentOS 6.5中配置sklearn，可以给大家作为参考。由于目前不怎么在Windows上做开发，也就没写如何在Windows上配置，有需要的可以参考<a href="http://www.jianshu.com/p/21b758541825" target="_blank" rel="external">目前最全的windows平台下：scikit-learn安装教程</a>。</p>
+<h1 id="方法一：k-均值聚类"><a href="#方法一：k-均值聚类" class="headerlink" title="方法一：k-均值聚类"></a>方法一：k-均值聚类</h1><p>给定鸢尾花数据集，如果我们知道这有三种鸢尾花，但是无法得到它们的标签，我们可以尝试非监督学习：我们可以通过某些标准聚类观测值到几个组别里。</p>
+<h2 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h2><p>我们先导入sklearn中的鸢尾花数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</div><div class="line"></div><div class="line">iris = datasets.load_iris()</div></pre></td></tr></table></figure>
+<p>数据存储在.data项中，是一个(n_samples, n_features)数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iris.data.shape</div></pre></td></tr></table></figure>
+<pre><code>(150, 4)
+</code></pre><p>每个观察对象的种类存贮在数据集的.target属性中。这是一个长度为n_samples的整数一维数组:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iris.target.shape</div></pre></td></tr></table></figure>
+<pre><code>(150,)
+</code></pre><p>我们再来绘图看看：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</div><div class="line">%matplotlib inline</div><div class="line"></div><div class="line">plt.xkcd()</div><div class="line">fig1 = plt.figure(<span class="number">1</span>)</div><div class="line">ax = fig1.gca(projection=<span class="string">'3d'</span>)</div><div class="line">ax.scatter(iris.data[:,<span class="number">3</span>],iris.data[:,<span class="number">0</span>],iris.data[:,<span class="number">2</span>])</div><div class="line">ax.set_xlabel(<span class="string">'Petal width'</span>)</div><div class="line">ax.set_ylabel(<span class="string">'Sepal length'</span>)</div><div class="line">ax.set_zlabel(<span class="string">'Petal length'</span>)</div><div class="line">ax.set_title(<span class="string">"Iris Data"</span>)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_7_0.png" alt="png"></p>
+<p>第一种思路是这样:这三种不同的品种每一种想必都会有特点或者存在一定的相似性。我们不妨先把这些杂乱无章的数据分成三类，然后对应的标出他们每一类的类别。如果按照这样的想法，那么这一个问题就变成了一个聚类问题。作为聚类问题，我们可以用KMeans算法去解决。有关于KMeans大家可以参考博文：<a href="http://blog.csdn.net/heavendai/article/details/7029465" target="_blank" rel="external">KMeans</a></p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywh20150430172825252.png" alt=""></p>
+<p>可以直观的看出来，图中把点分成了三类。然后我们做出这样一种假设：每一类有一个中心点，这一类的绝大部分点到中心点的距离应该是小于到其他类中心点的距离的。之所以说绝大部分是因为考虑到点的特例，我们不能因为单独的几个点而否定之前的大部分。基于这一个思想我们可以确定所要优化的目标函数，我们假设分类N个数据到K个类别，则有：<br><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywh20150430172928120.png" alt=""><br>其中的rnk意味着归类到k时为1，剩下为0.剩下的具体如何优化这里不在详细说了。</p>
+<h2 id="K-means-Demo："><a href="#K-means-Demo：" class="headerlink" title="K-means Demo："></a>K-means Demo：</h2><p>我们来看看sklearn官网的一个用KMeans聚类鸢尾花的demo：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">print(__doc__)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Code source: Gaël Varoquaux</span></div><div class="line"><span class="comment"># Modified for documentation by Jaques Grobler</span></div><div class="line"><span class="comment"># License: BSD 3 clause</span></div><div class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</div><div class="line"><span class="comment"># 固定随机数种子，使每次运行结果一致</span></div><div class="line">np.random.seed(<span class="number">5</span>)</div><div class="line"></div><div class="line">centers = [[<span class="number">1</span>, <span class="number">1</span>], [<span class="number">-1</span>, <span class="number">-1</span>], [<span class="number">1</span>, <span class="number">-1</span>]]</div><div class="line">iris = datasets.load_iris()</div><div class="line">X = iris.data</div><div class="line">y = iris.target</div><div class="line"><span class="comment"># 这里一共实例化了三个预测器</span></div><div class="line">estimators = &#123;<span class="string">'k_means_iris_3'</span>: KMeans(n_clusters=<span class="number">3</span>),</div><div class="line">              <span class="string">'k_means_iris_8'</span>: KMeans(n_clusters=<span class="number">8</span>),</div><div class="line">              <span class="string">'k_means_iris_bad_init'</span>: KMeans(n_clusters=<span class="number">3</span>, n_init=<span class="number">1</span>,</div><div class="line">                                              init=<span class="string">'random'</span>)&#125;</div><div class="line"></div><div class="line"></div><div class="line">fignum = <span class="number">1</span></div><div class="line"><span class="keyword">for</span> name, est <span class="keyword">in</span> estimators.items():</div><div class="line"></div><div class="line">    fig = plt.figure(fignum, figsize=(<span class="number">4</span>, <span class="number">3</span>))</div><div class="line">    plt.clf()</div><div class="line">    ax = Axes3D(fig, rect=[<span class="number">0</span>, <span class="number">0</span>, <span class="number">.95</span>, <span class="number">1</span>], elev=<span class="number">48</span>, azim=<span class="number">134</span>)</div><div class="line"></div><div class="line">    plt.cla()</div><div class="line">    est.fit(X)</div><div class="line">    labels = est.labels_</div><div class="line">    ax.scatter(X[:, <span class="number">3</span>], X[:, <span class="number">0</span>], X[:, <span class="number">2</span>], c=labels.astype(np.float))</div><div class="line"></div><div class="line">    ax.w_xaxis.set_ticklabels([])</div><div class="line">    ax.w_yaxis.set_ticklabels([])</div><div class="line">    ax.w_zaxis.set_ticklabels([])</div><div class="line">    ax.set_xlabel(<span class="string">'Petal width'</span>)</div><div class="line">    ax.set_ylabel(<span class="string">'Sepal length'</span>)</div><div class="line">    ax.set_zlabel(<span class="string">'Petal length'</span>)</div><div class="line">    fig = matplotlib.pyplot.gcf()</div><div class="line">    fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div><div class="line">    fignum = fignum + <span class="number">1</span></div><div class="line"><span class="comment"># Plot the ground truth</span></div><div class="line">fig = plt.figure(fignum, figsize=(<span class="number">4</span>, <span class="number">3</span>))</div><div class="line">plt.clf()</div><div class="line">ax = Axes3D(fig, rect=[<span class="number">0</span>, <span class="number">0</span>, <span class="number">.95</span>, <span class="number">1</span>], elev=<span class="number">48</span>, azim=<span class="number">134</span>)</div><div class="line"></div><div class="line">plt.cla()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">for</span> name, label <span class="keyword">in</span> [(<span class="string">'Setosa'</span>, <span class="number">0</span>),</div><div class="line">                    (<span class="string">'Versicolour'</span>, <span class="number">1</span>),</div><div class="line">                    (<span class="string">'Virginica'</span>, <span class="number">2</span>)]:</div><div class="line">    ax.text3D(X[y == label, <span class="number">3</span>].mean(),</div><div class="line">              X[y == label, <span class="number">0</span>].mean() + <span class="number">1.5</span>,</div><div class="line">              X[y == label, <span class="number">2</span>].mean(), name,</div><div class="line">              horizontalalignment=<span class="string">'center'</span>,</div><div class="line">              bbox=dict(alpha=<span class="number">.5</span>, edgecolor=<span class="string">'w'</span>, facecolor=<span class="string">'w'</span>))</div><div class="line">    <span class="comment"># 设置画布尺寸</span></div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div><div class="line"><span class="comment"># Reorder the labels to have colors matching the cluster results</span></div><div class="line">y = np.choose(y, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>]).astype(np.float)</div><div class="line">ax.scatter(X[:, <span class="number">3</span>], X[:, <span class="number">0</span>], X[:, <span class="number">2</span>], c=y)</div><div class="line"></div><div class="line">ax.w_xaxis.set_ticklabels([])</div><div class="line">ax.w_yaxis.set_ticklabels([])</div><div class="line">ax.w_zaxis.set_ticklabels([])</div><div class="line">ax.set_xlabel(<span class="string">'Petal width'</span>)</div><div class="line">ax.set_ylabel(<span class="string">'Sepal length'</span>)</div><div class="line">ax.set_zlabel(<span class="string">'Petal length'</span>)</div></pre></td></tr></table></figure>
+<pre><code>Automatically created module for IPython interactive environment
+&lt;matplotlib.text.Text at 0x1130a6910&gt;
+</code></pre><p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_2.png" alt="png"></p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_3.png" alt="png"></p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_4.png" alt="png"></p>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_9_5.png" alt="png"></p>
+<h2 id="skleran-cluster-KMeans-详解"><a href="#skleran-cluster-KMeans-详解" class="headerlink" title="skleran.cluster.KMeans 详解"></a>skleran.cluster.KMeans 详解</h2><p>不要觉得上面代码很复杂，我们来分解看看。导入数据前文中已经说过了，这里不再赘述。我们这里使用了sklearn中的KMeans类，首先：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</div></pre></td></tr></table></figure>
+<p>然后我们来实例化一个预测器，由背景知识我们知道，鸢尾花有三类，所以我们设置n_cluster=3：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">estimator = KMeans(n_clusters=<span class="number">3</span>, n_init=<span class="number">1</span>,init=<span class="string">'random'</span>)</div></pre></td></tr></table></figure>
+<p>下面来给大家详细介绍一下KMeans的参数（这里我会翻译sklearn中关于KMeans的文档，之后用到的不再翻译）：</p>
+<p><em>class</em> sklearn.cluster.KMeans(n_clusters=8, init=’k-means++’, n_init=10, max_iter=300, tol=0.0001, precompute_distances=’auto’, verbose=0, random_state=None, copy_x=True, n_jobs=1)</p>
+<p><strong>参数：</strong></p>
+<p>n_clusters : 整型, 可选的, 默认值: 8</p>
+<pre><code>聚类中心的数量
+</code></pre><p>max_iter : 整型, 默认值: 300</p>
+<pre><code>K-means算法的最大迭代次数。
+</code></pre><p>n_init : 整型, 默认值: 10</p>
+<pre><code>最后K均值聚类的结果还与初始聚类中心有关，n_init设为10意味着进行10次随机初始化，选择效果最好的一种来作为模型。
+</code></pre><p>init : {‘k-means++’, ‘random’ 或者一个n维数组}</p>
+<pre><code>初始化方法, 默认为 ‘k-means++’:
+‘k-means++’ : 用一个智能的方法选择K-means算法的初始聚类中心以加快收敛。
+‘random’: 从数据中随机选择k行作为初始聚类中心。
+如果传入的是一个n维数组，它应形如 (n_clusters, n_features) 并且给定初始聚类中心。
+</code></pre><p>precompute_distances : {‘auto’, True, False}</p>
+<pre><code>距离预计算 (更快但是也意味着更大的内存消耗).
+‘auto’ : 不进行距离预计算如果 n_samples * n_clusters &gt; 12 million. 这相当于对于双精度来说，每个事务将多消耗100MB的内存。
+True : 总是进行距离预计算。
+False : 从不进行距离预计算。
+</code></pre><p>tol : 浮点型, 默认值: 1e-4</p>
+<pre><code>相对误差
+</code></pre><p>n_jobs : 整型</p>
+<pre><code>同时进行运算的事务数。
+如果是-1，CPU的所有核心都将用于运算。如果是1，则只进行单线程运算，一般只用于debug。对于 n_jobs 小于 -1, (n_cpus + 1 + n_jobs) 个核心将被使用。比如说对于 n_jobs = -2, 只有一个核心将不被使用。
+</code></pre><p>random_state : 整数或者 numpy.RandomState, 可选的</p>
+<pre><code>如果给定一个整数，那么久相当于固定随机数种子。默认使用numpy的随机数生成器。
+</code></pre><p>verbose : 整型, 默认值：0</p>
+<pre><code>冗长模式。
+</code></pre><p>copy_x : 布尔值, 默认值：True</p>
+<pre><code>如果copy_x为True，则原始数据不会被修改。如果为False，原来的数据被修改。
+</code></pre><p><strong>属性：</strong></p>
+<p>cluster<em>centers</em> ：数组，形如[n_clusters, n_features]</p>
+<pre><code>聚类中心的坐标。
+</code></pre><p>labels_ : :</p>
+<pre><code>每个数据点的标签。
+</code></pre><p>inertia_ : 浮点型</p>
+<p>数据点到最近的聚类中心的距离的和。</p>
+<p><strong>方法：</strong></p>
+<p>fit(X[, y])    把数据输入到分类器里，即训练模型。</p>
+<p>fit_predict(X[, y])    计算聚类中心并用分类器对未知数据进行分类。</p>
+<p>fit_transform(X[, y])    计算聚类中心并将X变换到cluster-distance空间。</p>
+<p>get_params([deep])    获取估计器的参数。</p>
+<p>predict(X)    预测X所属的最近的聚类中心。</p>
+<p>score(X[, y])</p>
+<p>set_params(**params)    设置估计器的参数。</p>
+<p>transform(X[, y])    将X变换到cluster-distance空间。</p>
+<p>更多具体的请参考<a href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html" target="_blank" rel="external">sklearn.cluster.KMeans</a></p>
+<p>那我们现在来进行聚类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">estimator.fit(X)</div></pre></td></tr></table></figure>
+<pre><code>KMeans(copy_x=True, init=&apos;random&apos;, max_iter=300, n_clusters=3, n_init=1,
+    n_jobs=1, precompute_distances=&apos;auto&apos;, random_state=None, tol=0.0001,
+    verbose=0)
+</code></pre><p>来看看聚类中心：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ecc = estimator.cluster_centers_</div><div class="line"><span class="keyword">print</span> ecc</div><div class="line">ecc.shape</div></pre></td></tr></table></figure>
+<pre><code>[[ 6.85384615  3.07692308  5.71538462  2.05384615]
+ [ 5.88360656  2.74098361  4.38852459  1.43442623]
+ [ 5.006       3.418       1.464       0.244     ]]
+
+(3, 4)
+</code></pre><p>我们再来看看分类后的标签：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">labels = estimator.labels_</div><div class="line"><span class="keyword">print</span> labels</div><div class="line">labels.shape</div></pre></td></tr></table></figure>
+<pre><code>[2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 0 0 0
+ 0 0 1 1 0 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0
+ 0 1]
+
+(150,)
+</code></pre><p>好，下面我们来看看聚类后的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">fig1 = plt.figure(<span class="number">1</span>)</div><div class="line">plt.clf()</div><div class="line">ax = Axes3D(fig1, rect=[<span class="number">0</span>, <span class="number">0</span>, <span class="number">.95</span>, <span class="number">1</span>], elev=<span class="number">48</span>, azim=<span class="number">134</span>)</div><div class="line">ax.scatter(X[:, <span class="number">3</span>], X[:, <span class="number">0</span>], X[:, <span class="number">2</span>], c=labels.astype(np.float))</div><div class="line">ax.scatter(ecc[:,<span class="number">3</span>], ecc[:,<span class="number">0</span>], ecc[:,<span class="number">2</span>], s=<span class="number">200</span>) <span class="comment"># 绘制聚类中心</span></div><div class="line">ax.w_xaxis.set_ticklabels([])</div><div class="line">ax.w_yaxis.set_ticklabels([])</div><div class="line">ax.w_zaxis.set_ticklabels([])</div><div class="line">ax.set_xlabel(<span class="string">'Petal width'</span>)</div><div class="line">ax.set_ylabel(<span class="string">'Sepal length'</span>)</div><div class="line">ax.set_zlabel(<span class="string">'Petal length'</span>)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div><div class="line"><span class="keyword">for</span> name, label <span class="keyword">in</span> [(<span class="string">'Setosa'</span>, <span class="number">0</span>),</div><div class="line">                    (<span class="string">'Versicolour'</span>, <span class="number">1</span>),</div><div class="line">                    (<span class="string">'Virginica'</span>, <span class="number">2</span>)]:</div><div class="line">    ax.text3D(X[y == label, <span class="number">3</span>].mean(),</div><div class="line">              X[y == label, <span class="number">0</span>].mean() + <span class="number">1.5</span>,</div><div class="line">              X[y == label, <span class="number">2</span>].mean(), name,</div><div class="line">              horizontalalignment=<span class="string">'center'</span>,</div><div class="line">              bbox=dict(alpha=<span class="number">.5</span>, edgecolor=<span class="string">'w'</span>, facecolor=<span class="string">'w'</span>))</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_21_0.png" alt="png"></p>
+<p>这样呢，我们就将数据集中的150株鸢尾花分为了三类。</p>
+<p>假设说我现在新测量了一株鸢尾花的数据，那么我们可以使用KMeans的predict方法得到它属于哪一类鸢尾花：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rs = estimator.predict([[ <span class="number">5.0</span>,  <span class="number">3.6</span>,  <span class="number">1.3</span>,  <span class="number">0.25</span>]])</div><div class="line"><span class="keyword">print</span> <span class="string">"The label is : %d"</span> % rs[<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<pre><code>The label is : 2
+</code></pre><h1 id="方法二：k最近邻（kNN）"><a href="#方法二：k最近邻（kNN）" class="headerlink" title="方法二：k最近邻（kNN）"></a>方法二：k最近邻（kNN）</h1><p>最简单的可能的分类器是最近邻：给定一个新的观测值，将n维空间中最靠近它的训练样本标签给它。其中n是每个样本中特性(features)数。</p>
+<p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">k最近邻</a>分类器内部使用基于<a href="https://en.wikipedia.org/wiki/Ball_tree" target="_blank" rel="external">球树(ball tree)</a>来代表它训练的样本。</p>
+<h2 id="knn示例"><a href="#knn示例" class="headerlink" title="knn示例"></a>knn示例</h2><p>这里我们使用sklearn中的<a href="http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html" target="_blank" rel="external">KNeighborsClassifier类</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</div><div class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>同样的KNeighborsClassifier类也具有fit方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">knn.fit(iris.data, iris.target)</div></pre></td></tr></table></figure>
+<pre><code>KNeighborsClassifier(algorithm=&apos;auto&apos;, leaf_size=30, metric=&apos;minkowski&apos;,
+           metric_params=None, n_jobs=1, n_neighbors=3, p=2,
+           weights=&apos;uniform&apos;)
+</code></pre><p>好了，我们将kNN分类器训练完成了，下面就可以用我们训练好的分类器来进行预测：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">"The label is: %d"</span> % knn.predict([[<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="number">0.3</span>, <span class="number">0.4</span>]])</div></pre></td></tr></table></figure>
+<pre><code>The label is: 0
+</code></pre><h2 id="训练集和测试集"><a href="#训练集和测试集" class="headerlink" title="训练集和测试集"></a>训练集和测试集</h2><p>当验证学习算法时，不要用一个用来拟合估计器的数据来验证估计器的预测非常重要。确实，通过kNN估计器，我们将总是获得关于训练集完美的预测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">perm = np.random.permutation(iris.target.size)</div><div class="line">X = X[perm]</div><div class="line">y = y[perm]</div><div class="line">knn.fit(X[:<span class="number">100</span>], y[:<span class="number">100</span>])</div></pre></td></tr></table></figure>
+<pre><code>KNeighborsClassifier(algorithm=&apos;auto&apos;, leaf_size=30, metric=&apos;minkowski&apos;,
+           metric_params=None, n_jobs=1, n_neighbors=3, p=2,
+           weights=&apos;uniform&apos;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">knn.score(X[<span class="number">100</span>:], y[<span class="number">100</span>:])</div></pre></td></tr></table></figure>
+<pre><code>0.93999999999999995
+</code></pre><h1 id="方法三：主成分分析（PCA）与支持向量机（SVM）"><a href="#方法三：主成分分析（PCA）与支持向量机（SVM）" class="headerlink" title="方法三：主成分分析（PCA）与支持向量机（SVM）"></a>方法三：主成分分析（PCA）与支持向量机（SVM）</h1><h2 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h2><p>PCA不仅在可视化高维数据集时非常有用。它可以用来作为帮助加速对高维数据不那么有效率的监督方法的预处理步骤。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</div><div class="line">pca = PCA(n_components=<span class="number">2</span>)</div><div class="line">pca.fit(iris.data)</div></pre></td></tr></table></figure>
+<pre><code>PCA(copy=True, n_components=2, whiten=False)
+</code></pre><p>现在我们来对鸢尾花数据集进行主成分分析并可视化降维后的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> pl</div><div class="line"></div><div class="line">X = pca.transform(iris.data)</div><div class="line">pl.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=iris.target)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_36_0.png" alt="png"></p>
+<h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p><a href="http://zh.wikipedia.org/wiki/支持向量机" target="_blank" rel="external">SVM</a>尝试构建一个两个类别的最大间隔超平面。它选择输入的子集，调用支持向量即离分离的超平面最近的样本点。</p>
+<p>sklearn中有好几种支持向量机实现。最普遍使用的是svm.SVC，svm.NuSVC和svm.LinearSVC;“SVC”代表支持向量分类器(Support Vector Classifier)(也存在回归SVMs，在sklearn中叫作“SVR”)。</p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p>类别不总是可以用超平面分离，所以人们指望有些可能是多项式或指数实例的非线性决策函数：</p>
+<ul>
+<li><p>线性核</p>
+<p>  svc = svm.SVC(kernel=’linear’)</p>
+</li>
+<li><p>多项式核</p>
+<p>  svc = svm.SVC(kernel=’poly’, … degree=3) # degree: polynomial degree</p>
+</li>
+<li><p>RBF核(<a href="http://en.wikipedia.org/wiki/Radial_basis_function" target="_blank" rel="external">径向基函数</a>)</p>
+<p>  svc = svm.SVC(kernel=’rbf’) # gamma: inverse of size of # radial kernel</p>
+</li>
+</ul>
+<h3 id="SVM示例"><a href="#SVM示例" class="headerlink" title="SVM示例"></a>SVM示例</h3><h4 id="线性核函数"><a href="#线性核函数" class="headerlink" title="线性核函数"></a>线性核函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line"></div><div class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>)</div><div class="line">clf.fit(X, iris.target)</div></pre></td></tr></table></figure>
+<pre><code>SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=&apos;auto&apos;, kernel=&apos;linear&apos;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+</code></pre><p>一旦我们已经从数据学习，我们可以使用我们的模型来预测未观测数据最可能的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">"The label is: %d"</span> % clf.predict([[ <span class="number">5.0</span>,  <span class="number">3.6</span>]])</div></pre></td></tr></table></figure>
+<pre><code>The label is: 2
+</code></pre><p>我们来看看SVM作出的决策边界：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">xmin,xmax = X[:,<span class="number">0</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">0</span>].max()+<span class="number">0.1</span></div><div class="line">ymin,ymax = X[:,<span class="number">1</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">1</span>].max()+<span class="number">0.1</span></div><div class="line">xx,yy = np.meshgrid(np.arange(xmin,xmax,<span class="number">0.01</span>),np.arange(ymin,ymax,<span class="number">0.01</span>))</div><div class="line">zgrid = np.c_[xx.ravel(),yy.ravel()]</div><div class="line">yp = clf.predict(zgrid)</div><div class="line">ig3 = plt.figure(<span class="number">3</span>)</div><div class="line">plot1 = plt.pcolormesh(xx,yy,yp.reshape(xx.shape))</div><div class="line">plot2 = plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c=iris.target,s=<span class="number">60</span>)</div><div class="line">plt.xlim(xmin,xmax)</div><div class="line">plt.ylim(ymin,ymax)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_42_0.png" alt="png"></p>
+<h4 id="多项式核"><a href="#多项式核" class="headerlink" title="多项式核"></a>多项式核</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">clf = svm.SVC(kernel=<span class="string">'poly'</span>, degree=<span class="number">3</span>)</div><div class="line">clf.fit(X, iris.target)</div><div class="line">xmin,xmax = X[:,<span class="number">0</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">0</span>].max()+<span class="number">0.1</span></div><div class="line">ymin,ymax = X[:,<span class="number">1</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">1</span>].max()+<span class="number">0.1</span></div><div class="line">xx,yy = np.meshgrid(np.arange(xmin,xmax,<span class="number">0.01</span>),np.arange(ymin,ymax,<span class="number">0.01</span>))</div><div class="line">zgrid = np.c_[xx.ravel(),yy.ravel()]</div><div class="line">yp = clf.predict(zgrid)</div><div class="line">ig3 = plt.figure(<span class="number">4</span>)</div><div class="line">plot1 = plt.pcolormesh(xx,yy,yp.reshape(xx.shape))</div><div class="line">plot2 = plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c=iris.target,s=<span class="number">60</span>)</div><div class="line">plt.xlim(xmin,xmax)</div><div class="line">plt.ylim(ymin,ymax)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_44_0.png" alt="png"></p>
+<h4 id="rbf核"><a href="#rbf核" class="headerlink" title="rbf核"></a>rbf核</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">clf = svm.SVC(kernel=<span class="string">'rbf'</span>)</div><div class="line">clf.fit(X, iris.target)</div><div class="line">xmin,xmax = X[:,<span class="number">0</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">0</span>].max()+<span class="number">0.1</span></div><div class="line">ymin,ymax = X[:,<span class="number">1</span>].min()<span class="number">-0.1</span>, X[:,<span class="number">1</span>].max()+<span class="number">0.1</span></div><div class="line">xx,yy = np.meshgrid(np.arange(xmin,xmax,<span class="number">0.01</span>),np.arange(ymin,ymax,<span class="number">0.01</span>))</div><div class="line">zgrid = np.c_[xx.ravel(),yy.ravel()]</div><div class="line">yp = clf.predict(zgrid)</div><div class="line">ig3 = plt.figure(<span class="number">4</span>)</div><div class="line">plot1 = plt.pcolormesh(xx,yy,yp.reshape(xx.shape))</div><div class="line">plot2 = plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c=iris.target,s=<span class="number">60</span>)</div><div class="line">plt.xlim(xmin,xmax)</div><div class="line">plt.ylim(ymin,ymax)</div><div class="line">fig = matplotlib.pyplot.gcf()</div><div class="line">fig.set_size_inches(<span class="number">18.5</span>, <span class="number">10.5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://o9s430069.bkt.clouddn.com/image/2016/ml/ywhoutput_46_0.png" alt="png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="Viper WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Viper Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/2016年/" rel="tag"># 2016年</a>
+          
+            <a href="/tags/八月/" rel="tag"># 八月</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/13/ml/" rel="next" title="The Beginning of Machine Learning | 机器学习初步">
+                <i class="fa fa-chevron-left"></i> The Beginning of Machine Learning | 机器学习初步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/04/鸢尾花分类及sklearn实现/"
+     data-title="鸢尾花分类及sklearn实现"
+     data-content=""
+     data-url="http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/04/鸢尾花分类及sklearn实现/"
+           data-title="鸢尾花分类及sklearn实现" data-url="http://b.yczhou.cn/2016/08/04/鸢尾花分类及sklearn实现/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://b.yczhou.cn/avatar.png"
+               alt="Viper" />
+          <p class="site-author-name" itemprop="name">Viper</p>
+           
+              <p class="site-description motion-element" itemprop="description">倔驴一头，爱登山，爱徒步，喜欢一个人瞎捣鼓</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ycZhou" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.quora.com/profile/Nathanaiel-Chou" target="_blank" title="Quora">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Quora
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/zhou-ying-cheng-61" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/nathanael.chou" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/yczhou94" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/yczhou" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://stackoverflow.com/users/6556966/nathaniel-zhou" target="_blank" title="Stack-overflow">
+                  
+                    <i class="fa fa-fw fa-stack-overflow"></i>
+                  
+                  Stack-overflow
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法一：k-均值聚类"><span class="nav-number">2.</span> <span class="nav-text">方法一：k-均值聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入数据集"><span class="nav-number">2.1.</span> <span class="nav-text">导入数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means-Demo："><span class="nav-number">2.2.</span> <span class="nav-text">K-means Demo：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#skleran-cluster-KMeans-详解"><span class="nav-number">2.3.</span> <span class="nav-text">skleran.cluster.KMeans 详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法二：k最近邻（kNN）"><span class="nav-number">3.</span> <span class="nav-text">方法二：k最近邻（kNN）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#knn示例"><span class="nav-number">3.1.</span> <span class="nav-text">knn示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练集和测试集"><span class="nav-number">3.2.</span> <span class="nav-text">训练集和测试集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法三：主成分分析（PCA）与支持向量机（SVM）"><span class="nav-number">4.</span> <span class="nav-text">方法三：主成分分析（PCA）与支持向量机（SVM）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分分析"><span class="nav-number">4.1.</span> <span class="nav-text">主成分分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量机"><span class="nav-number">4.2.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">4.2.1.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM示例"><span class="nav-number">4.2.2.</span> <span class="nav-text">SVM示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线性核函数"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">线性核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式核"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">多项式核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rbf核"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">rbf核</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Viper</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yczhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("5yIrpLW3rA4Y9XrwcAQ8ySW1-gzGzoHsz", "4BypNGWdW0iF5SJlC9KthyIL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
