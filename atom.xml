@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://b.yczhou.cn/"/>
-  <updated>2017-02-28T13:03:07.000Z</updated>
+  <updated>2017-03-28T13:57:46.000Z</updated>
   <id>http://b.yczhou.cn/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>可能是最全的机器学习框架搭建手册</title>
+    <link href="http://b.yczhou.cn/2017/03/28/%E5%8F%AF%E8%83%BD%E6%98%AF%E6%9C%80%E5%85%A8%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/"/>
+    <id>http://b.yczhou.cn/2017/03/28/可能是最全的机器学习框架搭建手册/</id>
+    <published>2017-03-28T11:29:39.000Z</published>
+    <updated>2017-03-28T13:57:46.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;写这篇博客是应朋友的需求。最开始，由于时间限制，只会有基于Ubuntu的手册，其他Linux发行版本暂且搁置一下。如果大家在配置的过程中遇到了我没有提到的问题，欢迎大家在下方留言，我们一同解决问题。&lt;/p&gt;
+&lt;p&gt;同时，我并没有直接把所有需要安装的依赖一次性列出来，就是希望大家能够在拿到一个新的软件来编译时，也能自己一步一步解决所遇到的问题。多使用Google吧，它绝对会是你今后的好伙伴。也不要怕报错出现了一大堆英文，仔细读一读，你就能找到你需要检索的东西。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="2017年" scheme="http://b.yczhou.cn/tags/2017%E5%B9%B4/"/>
+    
+      <category term="三月" scheme="http://b.yczhou.cn/tags/%E4%B8%89%E6%9C%88/"/>
+    
+  </entry>
   
   <entry>
     <title>鸢尾花分类及sklearn实现</title>
@@ -31,11 +56,11 @@
       <category term="机器学习" scheme="http://b.yczhou.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
       <category term="2016年" scheme="http://b.yczhou.cn/tags/2016%E5%B9%B4/"/>
     
       <category term="Python" scheme="http://b.yczhou.cn/tags/Python/"/>
-    
-      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="八月" scheme="http://b.yczhou.cn/tags/%E5%85%AB%E6%9C%88/"/>
     
@@ -59,13 +84,13 @@
       <category term="机器学习" scheme="http://b.yczhou.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
       <category term="2016年" scheme="http://b.yczhou.cn/tags/2016%E5%B9%B4/"/>
     
       <category term="七月" scheme="http://b.yczhou.cn/tags/%E4%B8%83%E6%9C%88/"/>
     
       <category term="Python" scheme="http://b.yczhou.cn/tags/Python/"/>
-    
-      <category term="机器学习" scheme="http://b.yczhou.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="神经网络" scheme="http://b.yczhou.cn/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
