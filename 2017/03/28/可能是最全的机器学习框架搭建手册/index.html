@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://ac-HSNl7zbI.clouddn.com/PMnloPIu9oGeXdJl0noobct6lqGyy6hui4SeNN4O.jpg">
 <meta property="og:image" content="http://ac-HSNl7zbI.clouddn.com/qvOgam4iLCA3yIEQapY9NzKQaOpXsreXbhufGiNG.jpg">
 <meta property="og:image" content="http://ac-HSNl7zbI.clouddn.com/iFSvYEO0Okkj1zs97wmDNzQ9gnojntqDq3igQPxy.jpg">
-<meta property="og:updated_time" content="2017-03-28T13:57:46.000Z">
+<meta property="og:updated_time" content="2017-03-29T08:21:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="可能是最全的机器学习框架搭建手册">
 <meta name="twitter:description" content="写这篇博客是应朋友的需求。最开始，由于时间限制，只会有基于Ubuntu的手册，其他Linux发行版本暂且搁置一下。如果大家在配置的过程中遇到了我没有提到的问题，欢迎大家在下方留言，我们一同解决问题。
@@ -456,17 +456,17 @@
 <p>直接回车，然后CUDA就开始安装了，完成后，我们来配置环境变量：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">echo &apos;export CUDA_PATH=/usr/local/cuda&apos; &gt;&gt; ~/.bashrc</div><div class="line">echo &apos;export PATH=$PATH:$CUDA_PATH/bin&apos; &gt;&gt; ~/.bashrc</div><div class="line">echo &apos;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_PATH/lib:$CUDA_PATH/lib64&apos; &gt;&gt; ~/.bashrc</div><div class="line">source ~/.bashrc</div></pre></td></tr></table></figure>
 <p>接着，我们进入CUDA Samples目录开始测试CUDA安装是否成功：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~/NVIDIA_CUDA-8.0_Samples</div><div class="line">make all -j40</div><div class="line">cd bin/x86_64/linux/release/</div><div class="line">./deviceQuery</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~/NVIDIA_CUDA-8.0_Samples</div><div class="line">make all -j$(nproc)</div><div class="line">cd bin/x86_64/linux/release/</div><div class="line">./deviceQuery</div></pre></td></tr></table></figure>
 <p>这里会输出一大堆关于你的显卡的信息，其实我们想要的只是最后一行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Result = PASS</div></pre></td></tr></table></figure>
-<p>如果看到了这一行，证明CUDA已经配置成功了，否则，仔细检查一下上面有哪一步你没做对。到这里我们还要配置cuDNN (NVIDIA CUDA Deep Neural Network library)，下载链接<a href="https://developer.nvidia.com/cudnn" target="_blank" rel="external">NVIDIA cuDNN | NVIDIA Developer</a>。下载cuDNN需要注册英伟达的开发者账号，用邮箱几分钟就完成了。然后选择合适的版本，我这里选择的是cuDNN v5.1, for CUDA8.0, for Linux （之所以没有选择最新的v6.0是因为6.0在Caffe编译时会出错）。</p>
+<p>如果看到了这一行，证明CUDA已经配置成功了，否则，仔细检查一下上面有哪一步你没做对。到这里我们还要配置cuDNN (NVIDIA® CUDA Deep Neural Network library)，下载链接<a href="https://developer.nvidia.com/cudnn" target="_blank" rel="external">NVIDIA cuDNN | NVIDIA Developer</a>。下载cuDNN需要注册英伟达的开发者账号，用邮箱几分钟就完成了。然后选择合适的版本，我这里选择的是cuDNN v5.1, for CUDA8.0, for Linux （之所以没有选择最新的v6.0是因为6.0在Caffe编译时会出错）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~/Downloads</div><div class="line">tar -zxvf cudnn-8.0-linux-x64-v5.1.tgz</div><div class="line">sudo cp lib64* /usr/local/cuda/lib64</div><div class="line">sudo cp cudnn* /usr/local/cuda/inculde</div></pre></td></tr></table></figure>
 <h4 id="编译OpenCV"><a href="#编译OpenCV" class="headerlink" title="编译OpenCV"></a>编译OpenCV</h4><p>首先安装依赖：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install checkinstall cmake pkg-config yasm libtiff5-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine2-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils</div></pre></td></tr></table></figure>
 <p>从GitHub克隆OpenCV：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/opencv/opencv.git</div></pre></td></tr></table></figure>
 <p>编译并安装OpenCV</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd opencv</div><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D ENABLE_FAST_MATH=1 -D WITH_CUBLAS=1 ..</div><div class="line">make all -j40</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">cd opencv</div><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE \</div><div class="line">-D CMAKE_INSTALL_PREFIX=/usr/local \</div><div class="line">-D WITH_TBB=ON \</div><div class="line">-D BUILD_NEW_PYTHON_SUPPORT=ON \</div><div class="line">-D WITH_V4L=ON \</div><div class="line">-D INSTALL_C_EXAMPLES=ON \</div><div class="line">-D INSTALL_PYTHON_EXAMPLES=ON \</div><div class="line">-D BUILD_EXAMPLES=ON \</div><div class="line">-D WITH_QT=ON \</div><div class="line">-D WITH_OPENGL=ON \</div><div class="line">-D ENABLE_FAST_MATH=1 \</div><div class="line">-D WITH_CUBLAS=1 ..</div><div class="line">make all -j$(nproc)</div></pre></td></tr></table></figure>
 <p>到make的时候可以去喝杯咖啡再来，这一步需要的时间比较长，编译完成后使用如下命令安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo make install</div></pre></td></tr></table></figure>
 <p>接下来配置环境变量：</p>
@@ -474,7 +474,7 @@
 <p>查看OpenCV版本：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkg-config --modversion opencv</div></pre></td></tr></table></figure>
 <p>这样OpenCV就安装完成了。下面我们开始配置Caffe。</p>
-<p>接着讲上面的依赖安装，这个时候我们不需要libopencv-dev了，于是我们执行：</p>
+<h3 id="编译Caffe"><a href="#编译Caffe" class="headerlink" title="编译Caffe"></a>编译Caffe</h3><p>接着讲上面的依赖安装，这个时候我们不需要libopencv-dev了，于是我们执行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libhdf5-serial-dev protobuf-complier</div><div class="line">sudo apt-get install --no-install-recommends libboost-all-dev</div></pre></td></tr></table></figure>
 <p>按照官网的提示，已经可以进行编译了，不过我们首先需要从GitHub上克隆Caffe的源码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/BVLC/caffe.git</div></pre></td></tr></table></figure>
@@ -483,7 +483,7 @@
 <p>这里我只列出有改动的地方：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">USE_CUDNN := 1</div><div class="line">OPENCV_VERSION := 3</div><div class="line">BLAS := open</div><div class="line">WITH_PYTHON_LAYER := 1</div></pre></td></tr></table></figure>
 <p>然后开始编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make -j40</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make -j$(nproc)</div></pre></td></tr></table></figure>
 <p>这个时候，出现了一个下图所示的错误：</p>
 <p><img src="http://ac-HSNl7zbI.clouddn.com/PMnloPIu9oGeXdJl0noobct6lqGyy6hui4SeNN4O.jpg" alt="gflags"></p>
 <p>这是由于没有安装gflags造成的，在前面提到的依赖安装中，官网的说明并不完全，现在我们补上：</p>
@@ -497,18 +497,60 @@
 <p>我们在之前已经安装过libhdf5-serial-dev，这里之所以报错是因为从Ubuntu 16.04开始文件包含的位置发生了变化，我们找到</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">INCLUDE_DIRS := $(PYTHON_INCLUDE) ／usr/local/include</div><div class="line">LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib</div></pre></td></tr></table></figure>
 <p>将它们改为：</p>
-<p>``shell<br>INCLUDE_DIRS := $(PYTHON_INCLUDE) ／usr/local/include /usr/include/hdf5/serial<br>LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5/serial<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">至于我是如何知道hdf5.h的目录的，当然是通过find命令或者locate命令来查找。重新编译，这一次成功了，接着我们能开始：</div><div class="line"></div><div class="line">```shell</div><div class="line">make test -j40</div><div class="line">make runtest</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">INCLUDE_DIRS := $(PYTHON_INCLUDE) ／usr/local/include /usr/include/hdf5/serial</div><div class="line">LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5/serial</div></pre></td></tr></table></figure>
+<p>至于我是如何知道hdf5.h的目录的，当然是通过find命令或者locate命令来查找。重新编译，这一次成功了，接着我们能开始：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make test -j$(nproc)</div><div class="line">make runtest</div></pre></td></tr></table></figure>
 <p>不出意外的话，所有的都能通过，接下来编译Python wrapper：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make pycaffe</div></pre></td></tr></table></figure>
-<p>接下来将caffe目录添加到PYTHONPATH：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &apos;export PYTHONPATH=$PYTHONPATH:$HOME/caffe/python&apos; &gt;&gt; .bashrc</div></pre></td></tr></table></figure>
-<p>在python中尝试import caffe，发现了如下图所示的错误：</p>
-<p><img src="" alt="skimage"></p>
-<p>我们通过apt来安装skimage：</p>
+<p>接下来为Caffe配置环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo &apos;export PYTHONPATH=$PYTHONPATH:$HOME/caffe/python&apos; &gt;&gt; ~/.bashrc</div><div class="line">echo &apos;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/caffe/build/lib&apos; &gt;&gt; ~/.bashrc</div></pre></td></tr></table></figure>
+<p>在python中尝试import caffe，发现找不到skimage，我们通过apt来安装skimage：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install python-skimage</div></pre></td></tr></table></figure>
 <p>再次尝试import caffe，又出现了 ImportError: No module named google.protobuf.internal，我们再次通过apt来安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install python-protobuf</div></pre></td></tr></table></figure>
 <p>再次尝试，发现成功了，到这里Caffe的配置就算完成了。</p>
+<h3 id="使用高性能的Intel®-MKL库"><a href="#使用高性能的Intel®-MKL库" class="headerlink" title="使用高性能的Intel® MKL库"></a>使用高性能的Intel® MKL库</h3><p>英特尔数学核心函数库， Intel Math Kernel Library (Intel MKL)是一套经过高度优化和广泛线程化的数学例程，专为需要极致性能的科学、工程以及金融等领域的应用而设计。所幸的是，如果你有教育邮箱，那就可以免费使用Student版，Intel MKL官方下载链接：<a href="https://software.intel.com/en-us/qualify-for-free-software/student" target="_blank" rel="external">Qualify for Free Software-Student | Intel® Software</a>。进去之后选择Intel® Parallel Studio XE Cluster Edition(incudes Fortran and C/C++)下载。</p>
+<p>请记住，一定要使用教育邮箱！申请填写完成后就会跳转到下载页面，记得将页面中的序列号保存下来（手快关了也无所谓，你的邮箱中有）。接下来开始安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tar -zxvf parallel_studio_xe_2017_update2.tgz</div><div class="line">cd parallel_studio_xe_2017_update2</div><div class="line">./install_GUI.sh</div></pre></td></tr></table></figure>
+<p>在接下来的界面中，我们选择Install as current user来安装。接下来的安装和普通软件没有什么区别了。安装完成后，我们来为MKL配置环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">echo &apos;$HOME/intel/lib/intel64&apos; | sudo tee -a /etc/ld.so.conf.d/mkl.conf</div><div class="line">sudo ldconfig</div><div class="line">echo &apos;export MKL_PATH=$HOME/intel&apos; &gt;&gt; ~/.bashrc</div><div class="line">echo &apos;export PATH=$PAHT:$MKL_PATH/bin&apos; &gt;&gt; ~/.bashrc</div><div class="line">echo &apos;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MKL_PATH/lib/intel64:$MKL_PATH/mkl/lib/intel64&apos; &gt;&gt; ~/.bashrc</div><div class="line">exec -l $SHELL</div></pre></td></tr></table></figure>
+<p>好了，这样MKL就算是配置完成了，你可以通过设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BLAS = mkl</div></pre></td></tr></table></figure>
+<p>来使用MKL编译Caffe。</p>
+<h2 id="Torch"><a href="#Torch" class="headerlink" title="Torch"></a>Torch</h2><p>相比于Caffe繁琐的依赖，Torch的安装显得相当的简单，我们直接步入正题吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://gihub.com/torch/distro.git ~/torch --recursive</div><div class="line">cd ~torch; ./install-deps;</div><div class="line">./install.sh</div></pre></td></tr></table></figure>
+<p>一段时间后它会问你：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Do you want to automatically prepend the Torch install location</div><div class="line">to PATH and LD_LIRBRARY_PATH in you /home/ignatius/.bashrc&gt; (yes/no)</div><div class="line">[yes] &gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<p>当然是yes了，不然还得手动添加环境变量，接下来我们只需要重启一下终端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">exec -l $SHELL</div></pre></td></tr></table></figure>
+<p>然后来测试一下：</p>
+<p><img src="" alt="Torch"></p>
+<p>看到如图所示的内容就证明Torch安装成功了。相比于Caffe来说是不是相当的简单？</p>
+<h2 id="MXNet"><a href="#MXNet" class="headerlink" title="MXNet"></a>MXNet</h2><p>MXNet的安装也可以很简单，官方已经做好了预编译的安装包，通过pip就能够安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pip install mxnet.      #CPU</div><div class="line">pip install mxnet-mkl   #CPU with MKL-DNN acceleration</div><div class="line">pip install mxnet-cu75  #GPU with CUDA 7.5</div><div class="line">pip install mxnet-cu80  #GPU with CUDA 8.0</div></pre></td></tr></table></figure>
+<p>这几条命令中只需要选择一条即可，倘若看了之前的介绍，MKL、CUDA以及cuDNN（CUDA版本需要CUDA以及cuDNN）的肯定配置好了，放心大胆安装就是。</p>
+<p>好了，下面我们开始介绍从源码编译安装MXNet，当然MXNet的官方安装指南没有Caffe那么坑</p>
+<h3 id="依赖安装-1"><a href="#依赖安装-1" class="headerlink" title="依赖安装"></a>依赖安装</h3><p>官方给出的要求有：</p>
+<ul>
+<li>一个支持C++ 11的C++编译器，可以使用：<ul>
+<li>G++ (4.8或者更高版本）</li>
+<li>Clang</li>
+</ul>
+</li>
+<li>一个BLAS (Basic Linear Algebra Subprograms)库，支持的有：<ul>
+<li>libblas</li>
+<li>openblas</li>
+<li>Intel MKL</li>
+</ul>
+</li>
+<li>Graphviz，用来可视化网络图</li>
+<li>Jupyter Notebook，用来运行MXNet的例程</li>
+</ul>
+<p>如果是想要使用GPU，当然还需要CUDA和cuDNN。</p>
+<h3 id="安装MXNet-for-Python"><a href="#安装MXNet-for-Python" class="headerlink" title="安装MXNet for Python"></a>安装MXNet for Python</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">sudo apt install libc6-dev-i386 python-pip</div><div class="line">sudo -H pip install graphviz Jupyter</div><div class="line">git clone https://github.com/dlmc/mxnet.git ~/mxnet --recursive</div><div class="line">cd ~/mxnet</div><div class="line">cp make/config.mk .</div><div class="line">echo &apos;USE_CUDA=1&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;USE_CUDA_PATH=1&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;USE_CUDNN=1&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;USE_HDF5=1&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;USE_BLAS=openblas&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;ADD_CFLAGS+=-I/usr/include/openblas&apos; &gt;&gt; config.mk</div><div class="line">echo &apos;ADD_LDFLAGS+=-lopencv_core -lopencv_imgproc -lopencv_imgcodecs&apos; &gt;&gt; config.mk</div><div class="line">make all -j$(nproc)</div><div class="line">cd python</div><div class="line">sudo python setup.py install</div><div class="line">echo &apos;export PYTHONPATH=$PYTHONPATH:$HOME/mxnet/python&apos; &gt;&gt; ~/.bashrc</div><div class="line">exec -l $SHELL</div></pre></td></tr></table></figure>
+<p>好了，安装完成，我们来测试一下</p>
+<h3 id="测试MXNet"><a href="#测试MXNet" class="headerlink" title="测试MXNet"></a>测试MXNet</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">python</div><div class="line">&gt;&gt;&gt; import mxnet as mx</div><div class="line">&gt;&gt;&gt; a = mx.nd.ones((2, 3), mx.gpu())</div><div class="line">&gt;&gt;&gt; print ((a * 2).asnumpy())</div><div class="line">[[ 2. 2. 2.]</div><div class="line"> [ 2. 2. 2.]]</div></pre></td></tr></table></figure>
+<p>到这里，如果没有任何错误的话，MXNet就已经配置完成了。</p>
 
       
     </div>
@@ -801,7 +843,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Caffe"><span class="nav-number">1.1.</span> <span class="nav-text">Caffe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">依赖安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nvidia驱动以及CUDA"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Nvidia驱动以及CUDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译OpenCV"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">编译OpenCV</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Caffe"><span class="nav-number">1.1.</span> <span class="nav-text">Caffe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">依赖安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nvidia驱动以及CUDA"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Nvidia驱动以及CUDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译OpenCV"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">编译OpenCV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译Caffe"><span class="nav-number">1.1.2.</span> <span class="nav-text">编译Caffe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用高性能的Intel®-MKL库"><span class="nav-number">1.1.3.</span> <span class="nav-text">使用高性能的Intel® MKL库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Torch"><span class="nav-number">1.2.</span> <span class="nav-text">Torch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MXNet"><span class="nav-number">1.3.</span> <span class="nav-text">MXNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖安装-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">依赖安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MXNet-for-Python"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装MXNet for Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试MXNet"><span class="nav-number">1.3.3.</span> <span class="nav-text">测试MXNet</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
